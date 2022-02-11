@@ -1,6 +1,6 @@
-package com.factory.cars.sedan;
+package com.abstractfactorypattern.cars.sedan;
 
-import com.factory.cars.Car;
+import com.abstractfactorypattern.cars.Car;
 
 public class BMW3Series implements Car {
     @Override

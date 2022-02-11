@@ -1,11 +1,10 @@
-package com.factory.carfactory;
+package com.abstractfactorypattern.carfactory;
 
-import com.factory.AbstractCarFactory;
-import com.factory.cars.Car;
-import com.factory.cars.suv.HyundaiCreta;
-import com.factory.cars.suv.JeepCompass;
-import com.factory.cars.suv.MGAstor;
-import com.factory.cars.suv.ToyotaFortuner;
+import com.abstractfactorypattern.cars.Car;
+import com.abstractfactorypattern.cars.suv.HyundaiCreta;
+import com.abstractfactorypattern.cars.suv.JeepCompass;
+import com.abstractfactorypattern.cars.suv.MGAstor;
+import com.abstractfactorypattern.cars.suv.ToyotaFortuner;
 
 public class SUVCarFactory extends AbstractCarFactory {
 

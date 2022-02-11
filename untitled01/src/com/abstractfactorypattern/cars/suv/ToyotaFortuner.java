@@ -1,6 +1,6 @@
-package com.factory.cars.suv;
+package com.abstractfactorypattern.cars.suv;
 
-import com.factory.cars.Car;
+import com.abstractfactorypattern.cars.Car;
 
 public class ToyotaFortuner implements Car {
     @Override

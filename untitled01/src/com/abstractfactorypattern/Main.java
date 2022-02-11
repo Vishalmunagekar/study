@@ -1,9 +1,9 @@
-package com.factory;
+package com.abstractfactorypattern;
 
-import com.factory.carfactory.CarFactory;
-import com.factory.cars.Car;
+import com.abstractfactorypattern.carfactory.AbstractCarFactory;
+import com.abstractfactorypattern.cars.Car;
 
-public class Factory {
+public class Main {
     public static void main(String[] args) {
         AbstractCarFactory suvCarFactory = CarFactory.getCarFactory("SUV");
         Car hyundai_creta = suvCarFactory.getCar("Hyundai Creta");

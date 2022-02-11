@@ -1,15 +1,14 @@
-package com.factory.carfactory;
+package com.abstractfactorypattern.carfactory;
 
-import com.factory.AbstractCarFactory;
-import com.factory.cars.Car;
-import com.factory.cars.sedan.AudiA4;
-import com.factory.cars.sedan.BMW3Series;
-import com.factory.cars.sedan.HyundaiVerna;
-import com.factory.cars.sedan.MercedesBenzAClassLimousine;
+import com.abstractfactorypattern.cars.Car;
+import com.abstractfactorypattern.cars.sedan.AudiA4;
+import com.abstractfactorypattern.cars.sedan.BMW3Series;
+import com.abstractfactorypattern.cars.sedan.HyundaiVerna;
+import com.abstractfactorypattern.cars.sedan.MercedesBenzAClassLimousine;
 
 public class SedanCarFactory extends AbstractCarFactory {
     @Override
-    protected Car getCar(String name) {
+    public Car getCar(String name) {
         if(name.equals("Audi A4")){
             return new AudiA4();
         }

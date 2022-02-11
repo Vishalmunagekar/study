@@ -1,4 +1,4 @@
-package com.factory.cars;
+package com.abstractfactorypattern.cars;
 
 public interface Car {
    String buildCar();

@@ -1,7 +1,8 @@
-package com.factory.carfactory;
+package com.abstractfactorypattern;
 
-import com.factory.AbstractCarFactory;
-import com.factory.carfactory.SUVCarFactory;
+import com.abstractfactorypattern.carfactory.AbstractCarFactory;
+import com.abstractfactorypattern.carfactory.SUVCarFactory;
+import com.abstractfactorypattern.carfactory.SedanCarFactory;
 
 public class CarFactory {
     public static AbstractCarFactory getCarFactory(String carType){
