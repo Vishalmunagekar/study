@@ -1,6 +1,8 @@
-package com.observerpattern;
+package com.observerpattern.eventlistener;
 
-public class NotificationManager implements PaymentEventListener {
+import com.observerpattern.eventlistener.EventListener;
+
+public class NotificationEvent implements EventListener {
 
     public void sendNotification(){
         System.out.println("Notification Sent...");

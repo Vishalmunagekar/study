@@ -1,6 +1,8 @@
-package com.observerpattern;
+package com.observerpattern.eventlistener;
 
-public class EventLogger implements PaymentEventListener {
+import com.observerpattern.eventlistener.EventListener;
+
+public class EventLogger implements EventListener {
 
     public void logEvent() {
         System.out.println("payment received...");
