@@ -1,0 +1,26 @@
+
+_
+java:S1854
+"=Remove this useless assignment to local variable "singleton".(Ğı°¹ûÿÿÿÿ8ƒûÀí/
+_
+java:S1854	"=Remove this useless assignment to local variable "syncBlock".(¬Ï°úúÿÿÿÿ8ƒûÀí/
+f
+java:S1854"DRemove this useless assignment to local variable "syncNotEfficient".(¥ éûÿÿÿÿ8‹ûÀí/
+V
+java:S1854"9Remove this useless assignment to local variable "eager".(º‰•8ŒûÀí/
+Z
+java:S1854"8Remove this useless assignment to local variable "lazy".(™Ê¥öøÿÿÿÿ8ûÀí/
+K
+java:S1481")Remove this unused "lazy" local variable.(™Ê¥öøÿÿÿÿ8•ûÀí/
+G
+java:S1481"*Remove this unused "eager" local variable.(º‰•8™ûÀí/
+W
+java:S1481"5Remove this unused "syncNotEfficient" local variable.(¥ éûÿÿÿÿ8šûÀí/
+P
+java:S1481	".Remove this unused "syncBlock" local variable.(¬Ï°úúÿÿÿÿ8œûÀí/
+P
+java:S1481
+".Remove this unused "singleton" local variable.(Ğı°¹ûÿÿÿÿ8£ûÀí/
+b	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(·š†‡
+i
+java:S1223"LRename this method to prevent any misunderstanding or make it a constructor.(Çµí‘8¨ûÀí/
