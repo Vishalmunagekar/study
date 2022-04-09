@@ -2,7 +2,7 @@ package com.singletonpattern;
 
 public class SingletonHolder {
 
-    public SingletonHolder() {
+    private SingletonHolder() {
     }
 
     private static final class Singleton{
