@@ -2,7 +2,7 @@ package com.logical;
 
 import java.util.Arrays;
 
-public class Main {
+public class ReverseArray {
 	public static int[] reverseArray(int arr[])
 	{
 		int i =0, j= arr.length-1, temp;

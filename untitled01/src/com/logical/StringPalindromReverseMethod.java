@@ -1,6 +1,6 @@
 package com.logical;
 
-public class Palindrom {
+public class StringPalindromReverseMethod {
 
 	public static void main(String[] args) {
 		String str1 = "123321";

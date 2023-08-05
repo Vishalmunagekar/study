@@ -3,7 +3,7 @@ package com.logical;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AnagramUsingHashSet {
+public class StringAnagramUsingHashSet {
 
 	public static boolean isAnagram(String str1, String str2) {
 		if(str1.length() != str2.length())

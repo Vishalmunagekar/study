@@ -1,6 +1,6 @@
 package com.logical;
 
-public class Main {
+public class TwinPrimeNumbers {
 	public static void printTwinPrime(int n)
 	{
 		int arr[] = new int[n/2], counter = 0;

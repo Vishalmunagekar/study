@@ -6,7 +6,7 @@ package com.logical;
 
 import java.util.Scanner;
 
-public class StringReverse {
+public class StringReverseBy2ways {
 
 	public static void main1(String[] args) {
 		String original;

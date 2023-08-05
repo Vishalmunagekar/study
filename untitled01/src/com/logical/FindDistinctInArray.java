@@ -3,7 +3,7 @@ package com.logical;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Main {
+public class FindDistinctInArray {
 	public static void findDistinct(int[] arr)
 	{
 		int arr1[] = new int[arr.length];

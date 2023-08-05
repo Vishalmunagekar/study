@@ -1,6 +1,6 @@
 package com.logical;
 
-public class StringCompression {
+public class StringCompressionWithoutHashMap {
 	public static boolean contains(StringBuffer sb, char ch)
 	{
 		char[] charSet = sb.toString().toCharArray();
@@ -38,7 +38,7 @@ public class StringCompression {
 	}
 
 }
-Input	--> abbcccdddd
-Output	--> 1A2B3C4D
+//Input	--> abbcccdddd
+//Output	--> 1A2B3C4D
 
 

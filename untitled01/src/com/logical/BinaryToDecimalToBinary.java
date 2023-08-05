@@ -1,6 +1,6 @@
 package com.logical;
 
-public class Main {
+public class BinaryToDecimalToBinary {
 	public static void findBinary(int n) {
 		int i = 0, binary[] = new int[15];
 		while(n > 0)

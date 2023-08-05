@@ -1,6 +1,6 @@
 package com.logical;
 
-public class Main {
+public class StringReverseWithoutExtraSpace {
 	public static String StringRevers(char[] str)
 	{
 		char ch;

@@ -3,7 +3,7 @@ package com.logical;
 import java.io.*;
 import java.util.*;
 
-public class Solution {
+public class StringJavaTokens {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -20,17 +20,17 @@ public class Solution {
     }
 }
 
-input 	--> "He is a very very good boy, isn't he?" 
-//remove all spaces and Special characters from this given String
-output 	-->
-	10
-	He
-	is
-	a
-	very
-	very
-	good
-	boy
-	isn
-	t
-	he
+//input 	--> "He is a very very good boy, isn't he?"
+////remove all spaces and Special characters from this given String
+//output 	-->
+//	10
+//	He
+//	is
+//	a
+//	very
+//	very
+//	good
+//	boy
+//	isn
+//	t
+//	he

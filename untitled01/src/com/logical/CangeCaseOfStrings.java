@@ -1,6 +1,6 @@
 package com.logical;
 
-public class Main {
+public class CangeCaseOfStrings {
 	public static String firstUpper(String str) {
 		return str.substring(0,1).toUpperCase() + str.substring(1).toLowerCase();
 	}
@@ -40,10 +40,10 @@ public class Main {
 		System.out.println("camelCase       : " + camelCase(str));
 	}
 }
-Output : 
-
-First Upper     : Vishalmunagekar
-FirstLast Upper : VishalmunagekR
-camelCase       : helloVishalMunagekarIsHearHowAreYou
+//Output :
+//
+//First Upper     : Vishalmunagekar
+//FirstLast Upper : VishalmunagekR
+//camelCase       : helloVishalMunagekarIsHearHowAreYou
 
 

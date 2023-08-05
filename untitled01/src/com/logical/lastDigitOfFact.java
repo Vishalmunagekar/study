@@ -1,6 +1,6 @@
 package com.logical;
 
-public class Main {
+public class lastDigitOfFact {
 	public static int lastDigitOfFact(int n)
 	{
 		long fact = 1;

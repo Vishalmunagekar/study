@@ -1,6 +1,6 @@
 package com.logical;
 
-public class Main {
+public class NPrimeNumbers {
 	public static void printPrime(int n)
 	{
 		boolean isPrime;

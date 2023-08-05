@@ -5,7 +5,7 @@ package com.logical;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StringCompression {
+public class StringCompressionWithHashMap {
 	public static String Repetation(String str1)
 	{
 		String str = str1.toUpperCase();
@@ -40,15 +40,15 @@ public class StringCompression {
 	}
 
 }
-
-Input 	--> abbdddeeeefffff
-Output	--> 1A2B3D4E5F
-
-
-imp methods
-
-HashMap.get(key) 			<-- return value
-HashMap.containsKey(key) 	<-- return true or false
-HashMap.put(key, value)		<-- insrt new key value
-HashMap.keySet()			<-- return whole keys
+//
+//Input 	--> abbdddeeeefffff
+//Output	--> 1A2B3D4E5F
+//
+//
+//imp methods
+//
+//HashMap.get(key) 			<-- return value
+//HashMap.containsKey(key) 	<-- return true or false
+//HashMap.put(key, value)		<-- insrt new key value
+//HashMap.keySet()			<-- return whole keys
 

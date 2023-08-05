@@ -1,6 +1,6 @@
 package com.logical;
 
-public class Main {
+public class FindZerosInBinaryNumbers {
 	public static int FindCount(int L,int N, int K)
 	{
 		int count = 0;

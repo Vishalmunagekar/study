@@ -2,7 +2,7 @@ package com.logical;
 
 import java.util.Arrays;
 
-public class StringAnagram {
+public class StringAnagramWithArraySort {
 
 	public static boolean isAnagram(String str1, String str2)
 	{

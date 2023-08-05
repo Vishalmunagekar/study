@@ -1,14 +1,18 @@
-package com.logical;//	Sample Input
+package com.logical;
 
+
+//	Sample Input
 //	5
 //	1 -2 4 -5 1
 
 //	Sample Output
-
 //	9			This is number of sub arrays which addition is > 0
 
 
-public static void main(String[] args) {
+import java.util.Scanner;
+
+public class JavaSubArray {
+    public static void main(String[] args) {
     Scanner sc=new Scanner(System.in);
     int n=sc.nextInt();
     int[] array1= new int[n];
@@ -26,4 +30,5 @@ public static void main(String[] args) {
         }
     }
     System.out.println(count);
+}
 }
