@@ -1,4 +1,5 @@
-## OOPS Concepts
+## OOPS Concepts :
+Object-Oriented Programming (OOP) is a programming paradigm that uses "objects" to design software. It is built around the concept of objects, which can be instances of classes, and provides a way to structure programs so that properties and behaviors are bundled together. Here are the key principles and features of OOP:
 
 1. **Abstraction -** 
 - **Concept** : Data abstraction involves hiding the implementation details and showing only the essential features of an object. It focuses on what an object does rather than how it does it.
@@ -546,7 +547,7 @@ public void whenTaskSubmitted_ThenFutureResultObtained(){
 }
 ```
 ## Difference Between Runnable interface and Callable interface
-|		**Runnable interface ** |			**Callable interface**			|
+|		**Runnable interface** |			**Callable interface**			|
 |-------------------------------|-------------------------------------------|
 |It is a part of java.lang package since Java 1.0|It is a part of the java.util.concurrent package since Java 1.5.|
 |It cannot return the return of computation.|It can return the result of the parallel processing of a task.|
@@ -740,6 +741,133 @@ public final class String
             - IOError
             - AWTError
 
+## Spring boot annotations : 
+Annotations in Spring Boot are a form of metadata that provide information about the code and are used to influence the behavior of the application. They are a core part of the Spring Framework and play a crucial role in configuring Spring applications. Here are some key annotations in Spring Boot and their purposes:
+
+### Core Annotations
+- `@SpringBootApplication` : This is a convenience annotation that combines three annotations: @Configuration, @EnableAutoConfiguration, and @ComponentScan. It enables auto-configuration, component scanning, and allows defining extra configuration on a Spring Boot application.
+
+```java
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+```
+- `@Configuration` : Indicates that the class can be used by the Spring IoC container as a source of bean definitions.
+```java
+@Configuration
+public class AppConfig {
+    @Bean
+    public MyService myService() {
+        return new MyServiceImpl();
+    }
+}
+```
+- `@ComponentScan` : Configures component scanning directives for use with @Configuration classes. It tells Spring where to look for annotated components.
+```java
+@ComponentScan(basePackages = "com.example.myapp")
+public class AppConfig {
+}
+```
+- `@Bean` : Indicates that a method produces a bean to be managed by the Spring container.
+```java
+@Bean
+public MyService myService() {
+    return new MyServiceImpl();
+}
+```
+### Stereotype Annotations
+- `@Component` : Indicates that an annotated class is a "component". Such classes are considered as candidates for auto-detection when using annotation-based configuration and classpath scanning.
+```java
+@Component
+public class MyComponent {
+}
+```
+- `@Service` : Indicates that an annotated class is a "service". This annotation serves as a specialization of @Component
+```java
+@Service
+public class MyService {
+}
+```
+
+
+- `@Repository` : Indicates that an annotated class is a "repository". It is a specialization of @Component and used to indicate that the class provides the mechanism for storage, retrieval, search, update and delete operation on objects.
+```java
+@Repository
+public class MyRepository {
+}
+```
+- `@Controller` : Indicates that an annotated class is a "controller" (a Spring MVC controller). It is a specialization of @Component and used to define web controllers.
+```java
+@Controller
+public class MyController {
+}
+```
+- `@RestController` : Combines @Controller and @ResponseBody, indicating that the class serves RESTful web services.
+```java
+@RestController
+public class MyRestController {
+    @GetMapping("/hello")
+    public String sayHello() {
+        return "Hello, World!";
+    }
+}
+```
+### Dependency Injection Annotations
+- `@Autowired` : Marks a constructor, field, setter method, or config method to be autowired by Spring’s dependency injection facilities.
+```java
+@Service
+public class MyService {
+    @Autowired
+    private MyRepository myRepository;
+}
+```
+- `@Qualifier` : Used along with @Autowired to specify which bean should be injected when there are multiple beans of the same type.
+```java
+@Service
+public class MyService {
+    @Autowired
+    @Qualifier("mySpecialRepository")
+    private MyRepository myRepository;
+}
+```
+- `@Value` : Used for expression-driven dependency injection. It can be used to inject values from properties files.
+```java
+@Service
+@Value("${my.property}")
+private String myProperty;
+```
+### Spring MVC Annotations
+- `@RequestMapping` : Used to map web requests to specific handler classes and/or handler methods.
+```java
+@Controller
+@RequestMapping("/home")
+public class HomeController {
+    @RequestMapping("/welcome")
+    public String welcome() {
+        return "welcome";
+    }
+}
+```
+- `@GetMapping`, `@PostMapping`, `@PutMapping`, `@DeleteMapping`: Specialized variants of `@RequestMapping` for specific HTTP methods.
+```java
+@RestController
+public class MyRestController {
+    @GetMapping("/items")
+    public List<Item> getItems() {
+        return itemService.getAllItems();
+    }
+
+    @PostMapping("/items")
+    public void addItem(@RequestBody Item item) {
+        itemService.addItem(item);
+    }
+}
+```
+
+
 ## The Spring *@Controller* and *@RestController* Annotations
 - We can use the *@Controller* annotation for traditional Spring controllers, and it has been part of the framework for a very long time. *Spring 4.0* introduced the *@RestController* annotation in order to simplify the creation of RESTful web services. It's a convenient annotation that combines *@Controller* and *@ResponseBody*, which eliminates the need to annotate every request handling method of the controller class with the *@ResponseBody* annotation.
 
@@ -777,65 +905,6 @@ public class SimpleBookRestController {
 
     private Book findBookById(int id) {
         // ...
-    }
-}
-```
-
-## Difference between *@RequestMapping* and *@GetMapping*
-- *@RequestMapping* is used at the **class** level while *@GetMapping* is used to connect the **methods**.
-
-```JAVA
-@RestController
-@RequestMapping("/home")
-public class HomeController {
-    @RequestMapping(method = RequestMethod.GET)
-    String get() {
-        return "Hello from get";
-    }
-    @RequestMapping(method = RequestMethod.DELETE)
-    String delete() {
-        return "Hello from delete";
-    }
-    @RequestMapping(method = RequestMethod.POST)
-    String post() {
-        return "Hello from post";
-    }
-    @RequestMapping(method = RequestMethod.PUT)
-    String put() {
-        return "Hello from put";
-    }
-```
-
-### @RequestMapping Shortcuts:
-- *Spring 4.3* introduced method-level variants, also known as composed annotations of *@RequestMapping*. The composed annotations better express the semantics of the annotated methods. They act as wrapper to *@RequestMapping* and have become the standard ways of defining the endpoints.
-
-```JAVA
-@RestController
-@RequestMapping("/home")
-public class HomeController {
-    @GetMapping("/person")
-    public @ResponseBody ResponseEntity<String> getPerson() {
-        return new ResponseEntity<String>("Response from GET", HttpStatus.OK);
-    }
-    @GetMapping("/person/{id}")
-    public @ResponseBody ResponseEntity<String> getPersonById(@PathVariable String id) {
-        return new ResponseEntity<String>("Response from GET with id " + id, HttpStatus.OK);
-    }
-    @PostMapping("/person")
-    public @ResponseBody ResponseEntity<String> postPerson( @RequestBody Person person) {
-        return new ResponseEntity<String>("Response from POST method", HttpStatus.OK);
-    }
-    @PutMapping("/person")
-    public @ResponseBody ResponseEntity<String> putPerson() {
-        return new ResponseEntity<String>("Response from PUT method", HttpStatus.OK);
-    }
-    @DeleteMapping("/person")
-    public @ResponseBody ResponseEntity<String> deletePerson() {
-        return new ResponseEntity<String>("Response from DELETE method", HttpStatus.OK);
-    }
-    @PatchMapping("/person")
-    public @ResponseBody ResponseEntity<String> patchPerson() {
-        return new ResponseEntity<String>("Response from PATCH method", HttpStatus.OK);
     }
 }
 ```
@@ -1219,37 +1288,6 @@ COMMIT / ROLLBACK;
 2. Languages like Javascript & ActionScript are based on the ECMAScript standard.
 3. ECMA Standard is based on several originating technologies, the most well known being JavaScript (Netscape) and JScript (Microsoft).
 4. ECMA means European Computer Manufacturer’s Association
-
-## Why Anguler ???
-1. The main goal was to separate the DOM manipulation from application logic.
-2. The second main important goal was to separate the client-side from the server-side.
-3. Write less code due to CLI will provide ready made basic code
-4. Unit testing ready
-5. DOM Manipulation is so much easy - ngIf ngFor directive
-
-
-## How to take data from .ts file to html file in angular??
-
-* by using interpolation {{veriable or property name}}
-
-
-### 1. Two-Tier Architecture:
-- The two-tier is based on Client Server architecture.
-- The two-tier architecture is like client server application.
-- The direct communication takes place between client and server.
-- There is no intermediate between client and server. 
-- Because of tight coupling a 2 tiered application will run faster.
-
-* Client Application (Client Tier)
-* Database (Data Tier)
-
-### 2. Three-Tier Architecture : 
-- Three-tier architecture typically comprise a presentation tier, a business or data access tier, and a data tier. 
-- Three layers in the three tier architecture are as follows:
-* Client layer
-* Business layer
-* Data layer
-
 
 ## Types of joins : 
 * Inner join

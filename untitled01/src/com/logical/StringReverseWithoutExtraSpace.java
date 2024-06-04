@@ -1,5 +1,7 @@
 package com.logical;
 
+import java.util.stream.IntStream;
+
 public class StringReverseWithoutExtraSpace {
 	public static String StringRevers(char[] str)
 	{
@@ -19,7 +21,16 @@ public class StringReverseWithoutExtraSpace {
 	public static void main(String[] args) {
 		//reverse string without using extra space
 		String str = "ABCDEFGHIJKLMN";
-		System.out.println(StringRevers(str.toCharArray()));
+//		System.out.println(StringRevers(str.toCharArray()));
+		reversString(str);
 		
+	}
+
+	public static void reversString(String str){
+		int i = str.length() -1;
+		while (i >= 0){
+			System.out.print(str.charAt(i));
+			i--;
+		}
 	}
 }
