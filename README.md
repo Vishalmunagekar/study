@@ -94,85 +94,6 @@ class Main{
   }  
 } 
 ```
-## What is REST API? [Representational state transfer] not a protocal is a archi. pattern
-- Before we jump right into it, let’s first understand what REST is. 
-- Contrary to the belief of many, REST is not a protocol, a tool or library, but rather an architectural style of web service that provides a channel of communication between systems or computers on the internet.
-- It is a standard that is utilized as an architectural means of designing a Network-based software system.
-- Therefore a REST API is an application program interface that is backed by the architectural style of REST.
-- It refers to tools, service or software that is based on the REST architectural principle.
-- Although REST can be used on nearly any protocol, they take advantage of HTTP when used for web APIs.
-- The primary advantage of REST APIs is that they offer more flexibility. 
-- In REST APIs, data is not constrained to resources or methods. 
-- Therefore, it can make multiple types of calls, return various data formats, and even change structurally with the appropriate implementation of hypermedia.
-
-## What is Web API?
-- Web API is basically an open-source framework that is used to write HTTP APIs.
-- It refers to an API over the web which can be accessed using the HTTP protocol.
-- It is important to note that it is a concept and not a technology. 
-- Developers can build Web API using a vast array of technologies such as .NET, and Java, among others. 
-- Web API can be RESTful or not.
-- Web API implements protocol specification and thus it incorporates concepts like caching, URIs, versioning, request/response headers and various content formats in it.
-
-## Differences between REST and SOAP APIs
-
-|	   **REST API**				|			**SOAP API**                |
-|-------------------------------|---------------------------------------|
-|Representational state transfer |Simple Object Access Protocol	|
-|It has no official standard since it is primarily an architectural style	|	It is an official standard because it is a protocol |
-|Can use several standards like HTTP, URL, JSON, and XML | Based largely on HTTP and XML |
-
-
-### Dependency Injection
-- Dependency Injection is a fundamental aspect of the Spring framework, through which the Spring container “injects” objects into other objects or “dependencies”. Simply put, this allows for loose coupling of components and moves the responsibility of managing components onto the container.
-- Dependency injection is a pattern we can use to implement IoC, where the control being inverted is setting an object's dependencies.Connecting objects with other objects, or “injecting” objects into other objects, is done by an assembler rather than by the objects themselves.
-
-```java
-// Tight coupling
-// Here's how we would create an object dependency in traditional programming:
-public class Store {
-    private Item item;
- 
-    public Store() {
-        item = new ItemImpl1();    
-    }
-}
-
-// loose coupling
-// By using DI, we can rewrite the example without specifying the implementation of the Item that we want:
-public class Store {
-    private Item item;
-    public Store(Item item) {
-        this.item = item;
-    }
-}
-
-// Constructor-Based Dependency Injection in Spring f/w
-@Configuration
-@ComponentScan("com.app.constructordi")
-public class Config {
-
-    @Bean
-    public Engine engine() {
-        return new Engine("v8", 5);
-    }
-
-    @Bean
-    public Transmission transmission() {
-        return new Transmission("sliding");
-    }
-}
-
-@Component
-public class Car {
-
-    @Autowired
-    public Car(Engine engine, Transmission transmission) {
-        this.engine = engine;
-        this.transmission = transmission;
-    }
-}
-
-```
 # Collection in java
 
 - **Collection**
@@ -452,177 +373,19 @@ Output :
 106 : null
 107 : BlackWidow
 ```
-## Default Methods In Java 8
-- Before Java 8, interfaces could have only abstract methods. The implementation of these methods has to be provided in a separate class.
-- So, if a new method is to be added in an interface, then its implementation code has to be provided in the class implementing the same interface.
-- To overcome this issue, Java 8 has introduced the concept of default methods which allow the interfaces to have methods with implementation without affecting the classes that implement the interface.
-	
 ## What is Interface in java ?
 - The interface in Java is a mechanism to achieve abstraction.
 - There can be only abstract methods in the Java interface, not method body (Concreate methods).
 - It is used to achieve abstraction and multiple inheritance in Java.
-	
+
 ## why we can't create object of interface in java?
 - Interface is basically a complete abstract class.
 - So if we don't have any implementation of a method then that means if we create object of that interface and call that method it compile nothing as there is no code to compile.
 
-## Multithreading in Java
-1. Multithreading in Java is a process of executing multiple threads simultaneously.
-2. A thread is a lightweight sub-process, the smallest unit of processing
-3. Java provides Thread class to achieve thread programming.
-4. Thread class implements Runnable interface.
-	
-## Life cycle of a Thread:
-1. Newborn : Thread t1 = new Thread(object)
-2. Runnable : start();
-3. Running : run();
-4. Dead : stop();
-5. Blocked : sleep(), wait()
-6. Runnable : notify(), notifyAll();
-
-## Mutex :
-- The Mutex is a locking mechanism that makes sure only one thread can acquire the Mutex at a time and enter the critical section.
-- This thread only releases the Mutex when it exits the critical section.
-		 
-## Semaphore :
-- A semaphore is a signalling mechanism and a thread that is waiting on a semaphore can be signaled by another thread.
-- This is different than a mutex as the mutex can be signaled only by the thread that called the wait function.
-
-## Runnable And Callable in Java
-- *Runnable* is the core interface provided for representing multithreaded tasks, and *Java 1.5* provided *Callable* as an improved version of *Runnable*.
-
-### Runnable: 
-- The *Runnable* interface is a *functional interface* and has a single run() method that doesn't accept any parameters or return any values.
-```java
-public interface Runnable {
-    public void run();
-}
-
-public class EventLoggingTask implements  Runnable{
-    private Logger logger
-      = LoggerFactory.getLogger(EventLoggingTask.class);
-
-    @Override
-    public void run() {
-        logger.info("Message");
-    }
-}
-
-public void executeTask() {
-    executorService = Executors.newSingleThreadExecutor();
-    Future future = executorService.submit(new EventLoggingTask());
-    executorService.shutdown();
-}
-```
-
-### Callable:
-- The Callable interface is a *generic functional interface* containing a single call() method that returns a generic value V:
-```java
-public interface Callable<V> {
-    V call() throws Exception;
-}
-
-public class FactorialTask implements Callable<Integer> {
-    int number;
-
-    // standard constructors
-
-    public Integer call() throws InvalidParamaterException {
-        int fact = 1;
-        // ...
-        for(int count = number; count > 1; count--) {
-            fact = fact * count;
-        }
-
-        return fact;
-    }
-}
-
-@Test
-public void whenTaskSubmitted_ThenFutureResultObtained(){
-    FactorialTask task = new FactorialTask(5);
-    Future<Integer> future = executorService.submit(task);
- 
-    assertEquals(120, future.get().intValue());
-}
-```
-## Difference Between Runnable interface and Callable interface
-|		**Runnable interface** |			**Callable interface**			|
-|-------------------------------|-------------------------------------------|
-|It is a part of java.lang package since Java 1.0|It is a part of the java.util.concurrent package since Java 1.5.|
-|It cannot return the return of computation.|It can return the result of the parallel processing of a task.|
-|It cannot throw a checked Exception.|It can throw a checked Exception.|
-|In a runnable interface, one needs to override the run() method in Java.|In order to use Callable, you need to override the call()|
-
-## Difference Between Iterator and Enumeration
-|		**Iterator** 		|			**Enumeration**			|
-|---------------------------|-----------------------------------|
-|Universal cursor as it is applicable for all the collection classes|Not a universal cursor as it applies only to legacy classes.|
-|Using Iterator you can read and remove the elements in the collection|Using Enumeration you can only read the elements in the collection|
-|public boolean hasnext(); public objects next(); public void remove();|public boolean hasMoreElements(); public object nextElement();|
-|Can not add any new element in the collection|It has only read-only access to the elements in a collection.|
-|To overcome the limitations of Iterator you must opt for ListIterator.|To overcome the limitations of Enumeration you must opt for Iterator|
-|java.util.iterator|java.util.enumeration|
-|Since: 1.2| Since: 1.0 |
-
-```java
-Iterator itr = Collc.iterator();
-
-public boolean hasnext();
-public Object next();
-public void remove();
-```
-
-```java
-Enumeration er = Vect.elements();
-
-public boolean hasMoreElements();
-public nextElement();
-```
-
-## **Legacy Class in Java**
-1. Dictionary
-2. Vector
-3. HashTable
-4. Stack
-5. Properties
-
-## Difference Between iterable and iterator
-### **Iterable**
-- If any class implements iterable iterface, It gain ability to iterate over an object of that class using iterator.
-- It represents collection which can be traversed.
-- When we implement iterable interface it allows an object to make use of for-each loop.
-- iterable does call internally iterator() method
-- java.lang.Iterable
-- Since: 1.5
-- **Methods**
-	- Iterator<T> iterator()
-	- default void forEach(Consumer<? super T> action)
-	- default Spliterator<T> spliterator()
-
-
-### **Iterator**
-- Iterator is an interface which belongs to collection framework
-- It allows us to traverse the collection, access the data element and remove the data elements of the collection.
-- Since: 1.2
-- **Methods**
-	- public boolean hasnext();
-	- public objects next();
-	- public void remove();
-```java
-ArrayList<String> list = new ArrayList<String>(); 
-        list.add("A"); 
-        list.add("B"); 
-        list.add("C"); 
-        list.add("D"); 
-        list.add("E"); 
-
-        Iterator iterator = list.iterator();  
-        while (iterator.hasNext()) 
-            System.out.print(iterator.next() + " ");
-```
-
-
+## Default Methods In Java 8
+- Before Java 8, interfaces could have only abstract methods. The implementation of these methods has to be provided in a separate class.
+- So, if a new method is to be added in an interface, then its implementation code has to be provided in the class implementing the same interface.
+- To overcome this issue, Java 8 has introduced the concept of default methods which allow the interfaces to have methods with implementation without affecting the classes that implement the interface.
 
 ## Diff b/w comparable and comparator
 ### **Comparable :**
@@ -657,28 +420,6 @@ public int compare(School sch1, School sch2) {
 		return sch1.getNumOfStudents() > sch2.getNumOfStudents() ? 1 : -1;
 }
 ```
-
-### UpCasting :
-```java
-Person p = new Employee( );
-```
-### DownCasting :
-```java
-Person p = new Employee();
-Employee emp = ( Employee) p;
-```
-
-## What variable type can I use to hold huge numbers (30+ digits) in java?
-```java
-BigInteger bi1 = new BigInteger("637824629384623845238423545642384"); 
-BigInteger bi2 = new BigInteger("3039768898793547264523745379249934"); 
-
-BigInteger bigSum = bi1.add(bi2);
-BigInteger bigProduct = bi1.multiply(bi2);
-
-System.out.println("Sum     : " + bigSum);
-System.out.println("Product : " + bigProduct);
-```
 ## String : 
 - **Immutability** : Strings in Java are immutable, meaning their values cannot be changed once they are created. This immutability facilitates easy sharing of strings across different threads or functions without the risk of unintended modification.
 - **String Pool** : All string literals in Java are stored in a special memory area called the String pool. This facilitates memory optimization by avoiding duplicate string objects with the same value.
@@ -692,14 +433,12 @@ public final class String
 	implements Serializable, Comparable<String>, CharSequence {
 
 }
-
 // Example 1- 
 		String s1 = "HELLO"; // immutable - gose to string pool
         s1 = "WORLD"; // new instance - gose to string pool
 
 		String s3 = "HELLO"; // same instance as s1, not new
 		String s4 = new String("HELLO"); // out of string pool
-
 ```
 	
 ## StringBuffer : 
@@ -741,12 +480,96 @@ public final class String
             - IOError
             - AWTError
 
+### Finally block
+In Java, the `finally` block is used to execute important code such as resource cleanup that must run regardless of whether an exception is thrown or not. It is typically used in association with `try` and `catch` blocks.
+
+The finally block follows the try and catch blocks. It will always execute, even if an exception is not thrown or if an exception is caught and handled.
+
+The code within the finally block is guaranteed to run even if a return statement is encountered in the try or catch blocks, or if an exception is thrown but not caught.
+
+The primary use case for the finally block is resource management, such as closing files, releasing database connections, or cleaning up other resources.
+
+Example :
+```java
+public class FinallyExample {
+    public static void main(String[] args) {
+        try {
+            int result = 10 / 0; // This will throw an ArithmeticException
+        } catch (ArithmeticException e) {
+            System.out.println("Caught an arithmetic exception: " + e.getMessage());
+        } finally {
+            System.out.println("This block is always executed.");
+        }
+    }
+}
+```
+Output :
+```csharp
+Caught an arithmetic exception: / by zero
+This block is always executed.
+```
+### Behavior with Return Statements:
+Even if you have a return statement in the try or catch block, the finally block will still execute.
+```java
+public class FinallyExample {
+    public static void main(String[] args) {
+        System.out.println(testMethod());
+    }
+
+    public static String testMethod() {
+        try {
+            return "Try block";
+        } catch (Exception e) {
+            return "Catch block";
+        } finally {
+            System.out.println("Finally block");
+        }
+    }
+}
+
+```
+Output :
+```csharp
+Finally block
+Try block
+```
+##  Final keywork
+In Java, the `final` keyword is used to apply restrictions on classes, methods, and variables. Its purpose is to prevent further modification and to enhance the safety and predictability of your code. Here’s how it is used:
+#### Final Variables
+- When a variable is declared with the `final` keyword, its value cannot be modified after it is initialized. This makes the variable a constant.
+- For instance variables and local variables, the `final` keyword ensures that the variable is assigned only once. For object references, the reference cannot be changed, but the object itself can still be modified.
+#### Final Methods
+- When a method is declared as `final`, it cannot be overridden by subclasses. This is useful to prevent altering the intended behavior of the method in subclasses.
+#### Final Classes
+- When a class is declared as `final`, it cannot be subclassed. This is useful to prevent inheritance and to ensure that the class's behavior remains unchanged.
+#### Final Parameters
+- Method parameters can also be declared as `final`. This means the parameter cannot be modified within the method.
+
+### Summary of Uses
+1. Final Variable: A constant whose value cannot be changed once assigned.
+2. Final Method: A method that cannot be overridden by subclasses.
+3. Final Class: A class that cannot be subclassed.
+4. Final Parameter: A parameter whose value cannot be modified within the method.
+- Using the `final` keyword appropriately can help in writing more *robust*, *secure*, and *maintainable* code by explicitly preventing unintended modifications.
+
+## marker interfaces
+A marker interface in Java is an interface that does not contain any methods or constants. It is used to indicate that a class implementing the interface has some special property or behavior. Marker interfaces are used to provide additional information about an object to the compiler and JVM. This information can be used to perform certain actions or optimizations.
+
+#### Key Characteristics of Marker Interfaces
+- **No Methods** : Marker interfaces do not declare any methods. Their sole purpose is to mark or tag a class.
+- **Semantic Role** : They provide metadata about a class to the Java runtime or other tools and frameworks.
+- **Design Choice** : They serve as a design pattern to signal or flag certain behavior to the JVM or to the developers using the classes.
+
+#### Common Examples of Marker Interfaces
+1. **Serializable** : The `Serializable` interface is used to indicate that a class can be serialized, which means converting an object into a byte stream so that it can be easily saved to a file or transferred over a network.
+2. **Cloneable** : The `Cloneable` interface indicates that a class allows for field-for-field copying through the Object.clone() method. If a class does not implement Cloneable and its clone method is called, a `CloneNotSupportedException` is thrown.
+3. **Remote** : The `Remote` interface is used in RMI (Remote Method Invocation) to indicate that a class can be invoked remotely.
+
 ## Spring boot annotations : 
 Annotations in Spring Boot are a form of metadata that provide information about the code and are used to influence the behavior of the application. They are a core part of the Spring Framework and play a crucial role in configuring Spring applications. Here are some key annotations in Spring Boot and their purposes:
 
 ### Core Annotations
 - `@SpringBootApplication` : This is a convenience annotation that combines three annotations: @Configuration, @EnableAutoConfiguration, and @ComponentScan. It enables auto-configuration, component scanning, and allows defining extra configuration on a Spring Boot application.
-
 ```java
 @SpringBootApplication
 public class Application {
@@ -791,8 +614,6 @@ public class MyComponent {
 public class MyService {
 }
 ```
-
-
 - `@Repository` : Indicates that an annotated class is a "repository". It is a specialization of @Component and used to indicate that the class provides the mechanism for storage, retrieval, search, update and delete operation on objects.
 ```java
 @Repository
@@ -866,14 +687,63 @@ public class MyRestController {
     }
 }
 ```
+### Dependency Injection
+- Dependency Injection is a fundamental aspect of the Spring framework, through which the Spring container “injects” objects into other objects or “dependencies”. Simply put, this allows for loose coupling of components and moves the responsibility of managing components onto the container.
+- Dependency injection is a pattern we can use to implement IoC, where the control being inverted is setting an object's dependencies.Connecting objects with other objects, or “injecting” objects into other objects, is done by an assembler rather than by the objects themselves.
 
+```java
+// Tight coupling
+// Here's how we would create an object dependency in traditional programming:
+public class Store {
+    private Item item;
+ 
+    public Store() {
+        item = new ItemImpl1();    
+    }
+}
 
+// loose coupling
+// By using DI, we can rewrite the example without specifying the implementation of the Item that we want:
+public class Store {
+    private Item item;
+    public Store(Item item) {
+        this.item = item;
+    }
+}
+
+// Constructor-Based Dependency Injection in Spring f/w
+@Configuration
+@ComponentScan("com.app.constructordi")
+public class Config {
+
+    @Bean
+    public Engine engine() {
+        return new Engine("v8", 5);
+    }
+
+    @Bean
+    public Transmission transmission() {
+        return new Transmission("sliding");
+    }
+}
+
+@Component
+public class Car {
+
+    @Autowired
+    public Car(Engine engine, Transmission transmission) {
+        this.engine = engine;
+        this.transmission = transmission;
+    }
+}
+
+```
 ## The Spring *@Controller* and *@RestController* Annotations
-- We can use the *@Controller* annotation for traditional Spring controllers, and it has been part of the framework for a very long time. *Spring 4.0* introduced the *@RestController* annotation in order to simplify the creation of RESTful web services. It's a convenient annotation that combines *@Controller* and *@ResponseBody*, which eliminates the need to annotate every request handling method of the controller class with the *@ResponseBody* annotation.
+- We can use the `@Controller` annotation for traditional Spring controllers, and it has been part of the framework for a very long time. *Spring 4.0* introduced the *@RestController* annotation in order to simplify the creation of RESTful web services. It's a convenient annotation that combines `@Controller` and `@ResponseBody`, which eliminates the need to annotate every request handling method of the controller class with the `@ResponseBody` annotation.
 
 ### @Controller: 
-- We can annotate classic controllers with the *@Controller* annotation. This is simply a specialization of the *@Component* class, which allows us to auto-detect implementation classes through the classpath scanning. We typically use @Controller in combination with a @RequestMapping annotation for request handling methods.
-- We annotated the request handling method with *@ResponseBody*. This annotation enables automatic serialization of the return object into the HttpResponse.
+- We can annotate classic controllers with the `@Controller` annotation. This is simply a specialization of the `@Component` class, which allows us to auto-detect implementation classes through the classpath scanning. We typically use `@Controller` in combination with a `@RequestMapping` annotation for request handling methods.
+- We annotated the request handling method with `@ResponseBody`. This annotation enables automatic serialization of the return object into the HttpResponse.
 ```java
 @Controller
 @RequestMapping("books")
@@ -891,8 +761,8 @@ public class SimpleBookController {
 ```
 
 ### @RestController:
-- *@RestController* is a specialized version of the controller. It includes the *@Controller* and *@ResponseBody* annotations, and as a result, simplifies the controller implementation.
-- The controller is annotated with the *@RestController* annotation; therefore, the *@ResponseBody* isn't required. Every request handling method of the controller class automatically serializes return objects into HttpResponse.
+- `@RestController` is a specialized version of the controller. It includes the *@Controller* and `@ResponseBody` annotations, and as a result, simplifies the controller implementation.
+- The controller is annotated with the `@RestController` annotation; therefore, the `@ResponseBody` isn't required. Every request handling method of the controller class automatically serializes return objects into HttpResponse.
 ```JAVA
 @RestController
 @RequestMapping("books-rest")
@@ -907,6 +777,273 @@ public class SimpleBookRestController {
         // ...
     }
 }
+```
+## How Do We Create an Immutable Class
+1. Make your **class final**, so that no other classes can extend it.
+2. Make all your **fields final**, so that they’re initialized only once inside the constructor and never modified afterward.
+3. Don’t define/provide setter methods.
+- **Example :**
+```java
+package com.app;
+
+public final class ImmutableStudent {
+    private final int id;
+    private final String name;
+	//ctor
+    public ImmutableStudent(int id, String name) {
+        this.name = name;
+        this.id = id;
+    }
+    public int getId() {
+        return id;
+    }
+    public String getName() {
+        return name;
+    }
+}
+```
+## Types of index in SQL
+### 1. Clusterd Index
+- It store recored physiclly in Acending order by Primary key.
+- Your table has primary key as ID, when you insert data into table in any order it will maintain recored in acending order.
+- This type of index is only one per table
+
+### 2. Non-Clusterd Index
+- In database storage this type of index is stored at one place and table is stored in another place.
+- we can create multiple index per table.
+- **Example :**
+	- 1. textBook
+	- 2. Apartment flat no list at entry gate
+
+## Stored Procedure
+- A stored procedure in MySQL is a set of SQL statements that can be stored in the database and executed as a single unit. Stored procedures can accept parameters, perform complex operations, and return results. They are useful for encapsulating repetitive or complex operations, improving performance, and ensuring code reuse.
+1. Encapsulate complex logic into a single callable unit.
+2. Code can be reused across multiple applications or different parts of an application.
+3. Reduce network traffic by sending only the call to the procedure rather than multiple SQL statements.
+4. Restrict direct access to the data by providing controlled access via stored procedures.
+```sql
+DELIMITER $$
+CREATE PROCEDURE sp_insert_book
+(
+IN pBookId INT,
+IN pSubjectName VARCHAR(256),
+IN pBookName VARCHAR(256),
+IN pAuthorName VARCHAR(256),
+IN pPrice FLOAT
+)
+BEGIN
+INSERT INTO BookTable
+VALUES (pBookId, pSubjectName, pBookName, pAuthorName, pPrice);
+END $$
+DELIMITER ;
+```
+```sql
+DROP PROCEDURE procedureName;
+DELIMITER $$
+CREATE PROCEDURE procedureName(para1 varchar(12))
+BEGIN
+    SELECT * FROM EMP WHERE job=para1;
+END $$
+DELIMITER ;
+```
+```sql
+DELIMITER $$
+CREATE PROCEDURE sp_select_book( )
+BEGIN
+SELECT * FROM BookTable;
+END $$
+DELIMITER ;
+```
+## Functions
+In MySQL, functions are subroutines that return a single value. They can be built-in (provided by MySQL) or user-defined (created by the user). Functions are used to encapsulate repetitive logic, perform calculations, manipulate data, and return results. Functions differ from stored procedures in that they return a value and can be used in SQL expressions, whereas procedures do not return a value directly and are typically used to perform actions.
+#### Types of Functions in MySQL
+- **Built-in Functions** : Provided by MySQL, covering a wide range of tasks like string manipulation, mathematical calculations, date/time processing, and aggregate operations.
+Examples : `CONCAT('Hello', ' ', 'World')`,`SUBSTRING('Hello World', 1, 5)`,`NOW()`,`SUM()`,`COUNT`.
+- **User-defined Functions (UDFs)** : Created by users to encapsulate custom logic. These are written using SQL and can be used in SQL statements.
+
+Examples: 
+```SQL
+DROP FUNCTION IF EXISTS F1;
+DELIMITER $$
+CREATE FUNCTION F1() RETURNS varchar(100)
+BEGIN
+    DECLARE x varchar(100) default 'Hello World';
+    SELECT "Hello World";
+     call p1(x);
+     return x;
+END $$
+DELIMITER ;
+```
+```sql
+DROP FUNCTION functionName;
+DELIMITER $$
+CREATE FUNCTION functionName() RETURNS int
+BEGIN
+    DECLARE x int;
+    SET x = 1001;
+    RETURN (x);
+END $$
+DELIMITER ;
+```
+```SQl
+DROP FUNCTION IF EXISTS functionName;
+DELIMITER $$
+CREATE FUNCTION functionName(no int) RETURNS varchar(20)
+BEGIN
+   DECLARE x varchar(20);
+   SELECT DISTINCT 'Number present' INTO x FROM t1 WHERE c1 = no;
+  IF x IS NOT NULL THEN
+	RETURN(x);
+  ELSE
+	RETURN (no);
+  END IF;
+END $$
+DELIMITER ;
+```
+## Triggers In SQl
+```SQl
+DROP TRIGGER IF EXISTS triggerName;
+DELIMITER $$
+CREATE TRIGGER triggerName AFTER INSERT ON dept for each ROW
+BEGIN
+	INSERT INTO d1 VALUES (new.deptno, new.dname, new.loc, new.pwd);
+END $$
+DELIMITER ;
+```
+```SQl
+DROP TRIGGER IF EXISTS triggerName;
+DELIMITER $$
+CREATE TRIGGER triggerName AFTER UPDATE ON dept for each ROW
+BEGIN
+	INSERT INTO d1 VALUES (old.dname, new.dname);
+END $
+DELIMITER ;
+```
+```SQl
+DROP TRIGGER IF EXISTS triggerName;
+DELIMITER $$
+CREAsTE trigger triggerName AFTER DELETE ON dept for each ROW
+BEGIN
+	INSERT INTO d1 VALUES (old.deptno, old.dname, old.loc, old.pwd, NOW(), user());
+END $
+DELIMITER ;
+```
+### Transaction in SQL
+- A transaction is an atomic unit of database operations against the data in one or more databases. The effects of all the SQL statements in a transaction can be either all committed to the database or all rolled back.
+```sql
+SET autocommit = 0 / 1;
+-- or
+SET autocommit = OFF / ON;
+
+-- Example
+	
+-- 1. start a new transaction
+START TRANSACTION;
+ 
+-- 2. insert a new order for customer 145
+INSERT INTO orders(orderNumber,orderDate, requiredDate, shippedDate, status, customerNumber)
+VALUES( 1, '2005-05-31', '2005-06-10','2005-06-11','In Process', 145);
+        
+-- 3. Insert order line items
+INSERT INTO orderdetails(orderNumber, productCode, quantityOrdered, priceEach, orderLineNumber)
+VALUES( 1,'S18_1749', 30, '136', 1), ( 1,'S18_2248', 50, '55.09', 2);
+      
+-- 4. commit / rollback changes    
+COMMIT / ROLLBACK;
+```
+## What is mysql database engine?
+- Storage engines are MySQL components that handle the SQL operations for different table types.
+- InnoDB is the default and most general-purpose storage engine, and Oracle	recommends using it for tables except for specialized use cases.
+
+## Types of joins : 
+* Inner join
+* Left outer join
+* Right outer join
+* Cross join
+
+## Directives in Angular
+In Angular, directives are special markers on a DOM element (such as an attribute, element name, class, or comment) that tell Angular's compiler to attach a specified behavior to that DOM element. Directives are an essential feature of Angular as they allow you to extend HTML's capabilities and create reusable components.
+- **Types of Directives**:
+1. **Component Directives** : These are directives with a template. They are the most common type of directives and are used to create components.
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: '<h1>Hello, World!</h1>',
+})
+export class ExampleComponent {}
+```
+2. **Structural Directives** : Structural directives change the DOM layout by adding and removing DOM elements. They are denoted with an asterisk (*).
+```typescript
+<div *ngIf="isVisible">This is conditionally visible</div>
+
+<ul>
+  <li *ngFor="let item of items">{{ item }}</li>
+</ul>
+
+<div [ngSwitch]="value">
+  <p *ngSwitchCase="'A'">Value is A</p>
+  <p *ngSwitchCase="'B'">Value is B</p>
+  <p *ngSwitchDefault>Value is something else</p>
+</div>
+```
+3. **Attribute Directives** : Attribute directives change the appearance or behavior of an element, component, or another directive.
+```typescript
+<div [ngClass]="{'active': isActive, 'disabled': isDisabled}">Content</div>
+
+<div [ngStyle]="{'font-size.px': fontSize, 'color': color}">Styled Content</div>
+
+<div>
+    <input [(ngModel)]="userName" placeholder="Enter your name">
+    <p>Your name is {{ userName }}</p>
+</div>
+```
+## 1. One-way Data Binding :
+- One-way data binding will bind the data from the component to the view (DOM) or from view to the component.
+- One-way data binding is unidirectional.
+- You can only bind the data from component to the view or from view to the component.
+	
+* 1. Interpolation Binding: Interpolation refers to binding expressions into marked up language.
+```html
+		<strong>{{lastName}}</strong>
+```
+```typeScript
+firstName: string = "Vishal";
+```
+* 2. Property Binding: Property binding is used to set a property of a view element.
+The binding sets the property to the value of a template expression.
+```HTML
+	<button (click)="myFunction()">Show alert</button>
+```
+```typescript
+		myFunction(): void { 
+       		alert('Show alert!'); 
+   		} 
+```
+
+* 3. Attribute Binding: Attribute binding is used to set a attribute property of a view element.
+```html
+	<span [innerHTML]='firstName'></span>
+```		
+* 4. Class Binding: Class binding is used to set a class property of a view element.
+	
+* 5. Style Binding: Style binding is used to set a style of a view element.
+```HTML
+		<h1 [style.color]="blue">This is a Blue Heading</h1>
+```
+
+## 2. Two-way Data Binding in Angular
+- Two-way data binding in Angular will help users to exchange data from the component to view and from view to the component.
+
+```html
+	<input type="text" [(ngModel)] = 'val' />
+```	
+Before using ngModel to achieve two-way data binding, it’s very important to import the FormsModule from @angular/forms in app.module.ts file as shown below. FormsModule will contain the ngModule directive.
+
+```TypeScript
+	import { NgModule } from '@angular/core'; 
+	import { FormsModule } from "@angular/forms";
 ```
 
 ## Singleton class
@@ -996,41 +1133,93 @@ public class BillPughSingleton { //main class
     }
 }
 ```
+## Multithreading in Java
+1. Multithreading in Java is a process of executing multiple threads simultaneously.
+2. A thread is a lightweight sub-process, the smallest unit of processing
+3. Java provides Thread class to achieve thread programming.
+4. Thread class implements Runnable interface.
+	
+## Life cycle of a Thread:
+1. Newborn : Thread t1 = new Thread(object)
+2. Runnable : start();
+3. Running : run();
+4. Dead : stop();
+5. Blocked : sleep(), wait()
+6. Runnable : notify(), notifyAll();
 
-## How Do We Create an Immutable Class
-1. Make your **class final**, so that no other classes can extend it.
-2. Make all your **fields final**, so that they’re initialized only once inside the constructor and never modified afterward.
-3. Don’t define/provide setter methods.
-- **Example :**
+## Mutex :
+- The Mutex is a locking mechanism that makes sure only one thread can acquire the Mutex at a time and enter the critical section.
+- This thread only releases the Mutex when it exits the critical section.
+		 
+## Semaphore :
+- A semaphore is a signalling mechanism and a thread that is waiting on a semaphore can be signaled by another thread.
+- This is different than a mutex as the mutex can be signaled only by the thread that called the wait function.
+
+## Runnable And Callable in Java
+- *Runnable* is the core interface provided for representing multithreaded tasks, and *Java 1.5* provided *Callable* as an improved version of *Runnable*.
+
+### Runnable: 
+- The *Runnable* interface is a *functional interface* and has a single run() method that doesn't accept any parameters or return any values.
 ```java
-package com.app;
+public interface Runnable {
+    public void run();
+}
 
-public final class ImmutableStudent {
-    private final int id;
-    private final String name;
-	//ctor
-    public ImmutableStudent(int id, String name) {
-        this.name = name;
-        this.id = id;
-    }
-    public int getId() {
-        return id;
-    }
-    public String getName() {
-        return name;
+public class EventLoggingTask implements  Runnable{
+    private Logger logger
+      = LoggerFactory.getLogger(EventLoggingTask.class);
+
+    @Override
+    public void run() {
+        logger.info("Message");
     }
 }
+
+public void executeTask() {
+    executorService = Executors.newSingleThreadExecutor();
+    Future future = executorService.submit(new EventLoggingTask());
+    executorService.shutdown();
+}
 ```
-## Life Cycle Of MVC
-- Thin client send a request.
-- It will first reaches to **web.xml** file where we did servlet mapping.
-- Then this request routed by the **servlet Container** to **DispatcherServlet** Which is act like **front Controller** provided by Spring Container
-- DispatcherServlet take help of **Handler Mapping** to select Apropriate Controller.
-- Handler Mapping chooes a controller based on Request **URl**
-- Request thus reaches to Specific Controller, Then Controller use service , DAO layer and execute BL.
-- result of BL is now return back to DispatcherServlet as a **ModelAndView** Object
-- Then This Object send to **ViewResolver** to get the **view page ( JSP )**
-- Then Page  will rendered to user
+
+### Callable:
+- The Callable interface is a *generic functional interface* containing a single call() method that returns a generic value V:
+```java
+public interface Callable<V> {
+    V call() throws Exception;
+}
+
+public class FactorialTask implements Callable<Integer> {
+    int number;
+
+    // standard constructors
+
+    public Integer call() throws InvalidParamaterException {
+        int fact = 1;
+        // ...
+        for(int count = number; count > 1; count--) {
+            fact = fact * count;
+        }
+
+        return fact;
+    }
+}
+
+@Test
+public void whenTaskSubmitted_ThenFutureResultObtained(){
+    FactorialTask task = new FactorialTask(5);
+    Future<Integer> future = executorService.submit(task);
+ 
+    assertEquals(120, future.get().intValue());
+}
+```
+## Difference Between Runnable interface and Callable interface
+|		**Runnable interface** |			**Callable interface**			|
+|-------------------------------|-------------------------------------------|
+|It is a part of java.lang package since Java 1.0|It is a part of the java.util.concurrent package since Java 1.5.|
+|It cannot return the return of computation.|It can return the result of the parallel processing of a task.|
+|It cannot throw a checked Exception.|It can throw a checked Exception.|
+|In a runnable interface, one needs to override the run() method in Java.|In order to use Callable, you need to override the call()|
 
 ## SOLID Principles
 - The SOLID design principles were promoted by Robert C. Martin and are some of the best-known design principles in object-oriented software development. 
@@ -1092,338 +1281,6 @@ public class Account
 	1. - High-level modules should not depend on low-level modules. Both should depend on abstractions.
 	2. - Abstractions should not depend on details. Details should depend on abstractions.
 - In spring framework, all modules are provided as separate components which can work together by simply injected dependencies in other module. This dependency is managed externally in XML files.
-
-## Difference between Mysql and Nosql .
-|    **MySQL**						           |                    **NoSQL**                      |
-|----------------------------------------------|---------------------------------------------------|
-|Relational database Management system (RDBMS) |	Non-relational or distributed database system. |
-|These databases have fixed or static or predefined schema |	They have have dynamic schema      |
-|Verticlly Scalable			                    | Horizontally scalable|
-|stores data in a table where the data is neatly separated into rows and columns. | store data in JSON in a very flexible way |
-|SQL is a better fit for complex query environment	| NoSQL databases isn’t a good fit for complex queries |
-|Structured Query language	| Unstructured Query language |
-
-## ACID properties:
-
-### Atomicity:
-- All the operations inside transaction take place or Not or rolled back.
-
-### Consistency: 
-- In the middle of transaction if there is an error in transaction then all the changes that already made will be rolled back automaticlly.
-
-### Isolation: 
-- Every transaction is individual and one transaction can't acces the result of other until the transaction completed.
-- that's mean at a time only one transaction can happen.
-
-### Durability:
-- once the transaction completed, then the changes it has made to the database will be permanent even if there is a system failuer or any abnormal changes.
-
-## Types of index in SQL
-### 1. Clusterd Index
-- It store recored physiclly in Acending order by Primary key.
-- Your table has primary key as ID, when you insert data into table in any order it will maintain recored in acending order.
-- This type of index is only one per table
-
-### 2. Non-Clusterd Index
-- In database storage this type of index is stored at one place and table is stored in another place.
-- we can create multiple index per table.
-- **Example :**
-	- 1. textBook
-	- 2. Apartment flat no list at entry gate
-
-## Stored Procedure
-```sql
-DELIMITER $$
-CREATE PROCEDURE sp_insert_book
-(
-IN pBookId INT,
-IN pSubjectName VARCHAR(256),
-IN pBookName VARCHAR(256),
-IN pAuthorName VARCHAR(256),
-IN pPrice FLOAT
-)
-BEGIN
-INSERT INTO BookTable
-VALUES (pBookId, pSubjectName, pBookName, pAuthorName, pPrice);
-END $$
-DELIMITER ;
-```
-```sql
-DROP PROCEDURE procedureName;
-DELIMITER $$
-CREATE PROCEDURE procedureName(para1 varchar(12))
-BEGIN
-    SELECT * FROM EMP WHERE job=para1;
-END $$
-DELIMITER ;
-```
-```sql
-DELIMITER $$
-CREATE PROCEDURE sp_select_book( )
-BEGIN
-SELECT * FROM BookTable;
-END $$
-DELIMITER ;
-```
-## Functions In SQL
-
-```SQL
-DROP FUNCTION IF EXISTS F1;
-DELIMITER $$
-CREATE FUNCTION F1() RETURNS varchar(100)
-BEGIN
-    DECLARE x varchar(100) default 'Hello World';
-    SELECT "Hello World";
-     call p1(x);
-     return x;
-END $$
-DELIMITER ;
-```
-```sql
-DROP FUNCTION functionName;
-DELIMITER $$
-CREATE FUNCTION functionName() RETURNS int
-BEGIN
-    DECLARE x int;
-    SET x = 1001;
-    RETURN (x);
-END $$
-DELIMITER ;
-```
-```SQl
-DROP FUNCTION IF EXISTS functionName;
-DELIMITER $$
-CREATE FUNCTION functionName(no int) RETURNS varchar(20)
-BEGIN
-   DECLARE x varchar(20);
-   SELECT DISTINCT 'Number present' INTO x FROM t1 WHERE c1 = no;
-  IF x IS NOT NULL THEN
-	RETURN(x);
-  ELSE
-	RETURN (no);
-  END IF;
-END $$
-DELIMITER ;
-```
-
-## What are Views SQL??
-- A view is nothing more than a SQL statement that is stored in the database with an associated name.
-- A view is actually a composition of a table in the form of a predefined SQL query.
-	
-```sql
-CREATE VIEW CUSTOMERS_VIEW AS
-SELECT name, age
-FROM  CUSTOMERS;
-```
-## Triggers In SQl
-```SQl
-DROP TRIGGER IF EXISTS triggerName;
-DELIMITER $$
-CREATE TRIGGER triggerName AFTER INSERT ON dept for each ROW
-BEGIN
-	INSERT INTO d1 VALUES (new.deptno, new.dname, new.loc, new.pwd);
-END $$
-DELIMITER ;
-```
-```SQl
-DROP TRIGGER IF EXISTS triggerName;
-DELIMITER $$
-CREATE TRIGGER triggerName AFTER UPDATE ON dept for each ROW
-BEGIN
-	INSERT INTO d1 VALUES (old.dname, new.dname);
-END $
-DELIMITER ;
-```
-```SQl
-DROP TRIGGER IF EXISTS triggerName;
-DELIMITER $$
-CREAsTE trigger triggerName AFTER DELETE ON dept for each ROW
-BEGIN
-	INSERT INTO d1 VALUES (old.deptno, old.dname, old.loc, old.pwd, NOW(), user());
-END $
-DELIMITER ;
-```
-### Transaction in SQL
-- A transaction is an atomic unit of database operations against the data in one or more databases. The effects of all the SQL statements in a transaction can be either all committed to the database or all rolled back.
-```sql
-SET autocommit = 0 / 1;
--- or
-SET autocommit = OFF / ON;
-
--- Example
-	
--- 1. start a new transaction
-START TRANSACTION;
- 
--- 2. insert a new order for customer 145
-INSERT INTO orders(orderNumber,orderDate, requiredDate, shippedDate, status, customerNumber)
-VALUES( 1, '2005-05-31', '2005-06-10','2005-06-11','In Process', 145);
-        
--- 3. Insert order line items
-INSERT INTO orderdetails(orderNumber, productCode, quantityOrdered, priceEach, orderLineNumber)
-VALUES( 1,'S18_1749', 30, '136', 1), ( 1,'S18_2248', 50, '55.09', 2);
-      
--- 4. commit / rollback changes    
-COMMIT / ROLLBACK;
-```
-## What is mysql database engine?
-- Storage engines are MySQL components that handle the SQL operations for different table types.
-- InnoDB is the default and most general-purpose storage engine, and Oracle	recommends using it for tables except for specialized use cases.
-
-## what is ECMAScript? 
-- ECMA means European Computer Manufacturer’s Association
-- ECMAScript is a standard. JavaScript and ActionScript are well-known implementations of the ECMAScript standard.
-- JavaScript is a subset of ECMAScript. 
-- JavaScript is basically ECMAScript at its core but builds upon it. 
-- Languages such as ActionScript, JavaScript, JScript all use ECMAScript as its core. 
-- As a comparison, AS/JS/JScript are 3 different cars, but they all use the same engine. Each of their exteriors is different though, and there have been several modifications done to each to make it unique.
-- The history is, Brendan Eich created Mocha which became LiveScript, and later JavaScript.
-- Netscape presented JavaScript to Ecma International, which develops standards and it was renamed to ECMA-262 aka ECMAScript.
-- It's important to note that Brendan Eich's "JavaScript" is not the same JavaScript that is a dialect of ECMAScript.
-- He built the core language which was renamed to ECMAScript, which differs from the JavaScript which browser-vendors implement nowadays.
-	
-## Point wise ES:
-
-1. ECMAScript is a Standard for a scripting languages.
-2. Languages like Javascript & ActionScript are based on the ECMAScript standard.
-3. ECMA Standard is based on several originating technologies, the most well known being JavaScript (Netscape) and JScript (Microsoft).
-4. ECMA means European Computer Manufacturer’s Association
-
-## Types of joins : 
-* Inner join
-* Left outer join
-* Right outer join
-* Cross join
-	
-	
-## The following table lists the important built-in AngularJS directives.
-* ng-app
-* ng-init
-* ng-model
-* ng-controller
-* ng-show
-* ng-readonly
-* ng-disabled
-* ng-if
-* ng-repeat
-* ng-click
-* router-outlet
-
-
-## AngularJS Routing with Parameters: Single Page Application Example
-### What is Single Page Applications?
-- Single page applications or (SPAs) are web applications that load a single HTML page and dynamically update the page based on the user interaction with the web application.
-
-## What is Routing in AngularJS?
-- In AngularJS, routing is what allows you to create Single Page Applications.
-- AngularJS routes enable you to create different URLs for different content in your application.
-- AngularJS routes allow one to show multiple contents depending on which route is chosen.
-
-- Router-outlet in Angular works as a placeholder which is used to load the different components dynamically based on the activated component or current route state. 
-- Navigation can be done using router-outlet directive and the activated component will take place inside the router-outlet to load its content.
-
-```HTML
-<router-outlet></router-outlet>  <!-- add this tag into html page -->
-```
-```TypeScript
-import { Routes, RouterModule } from '@angular/router'; 
-
-const appRoutes: Routes = [  
-    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },    
-    { path: 'dashboard', component: DashboardComponent },    
-    { path: 'about', component: AboutComponent },    
-    { path: 'contact', component: ContactComponent },   
-]; 
-```
----
-
-```TypeScript
-import { Component, OnInit } from "@angular/core";
-
-@Component({
-  templateUrl:"button.html" //this is the component which has the above button html
-})
-
-export class App implements OnInit{
-  constructor(){}
-
-  ngOnInit(){
-
-  }
-
-  myFunc(){
-    console.log("function called");
-  }
-}
-```
----
-
-```HTML
-<button (click)="myFunc()"></button>
-```
----
-
-## 1. One-way Data Binding :
-- One-way data binding will bind the data from the component to the view (DOM) or from view to the component.
-- One-way data binding is unidirectional.
-- You can only bind the data from component to the view or from view to the component.
-	
-* 1. Interpolation Binding: Interpolation refers to binding expressions into marked up language.
-```HTML
-		<strong>{{lastName}}</strong>
-```
-```TypeScript
-firstName: string = "Vishal";
-```
-* 2. Property Binding: Property binding is used to set a property of a view element.
-The binding sets the property to the value of a template expression.
-```HTML
-	<button (click)="myFunction()">Show alert</button>
-```
-```TypeScript
-		myFunction(): void { 
-       			alert('Show alert!'); 
-   				} 
-```
-
-* 3. Attribute Binding: Attribute binding is used to set a attribute property of a view element.
-```HTML
-	<span [innerHTML]='firstName'></span>
-```		
-
-* 4. Class Binding: Class binding is used to set a class property of a view element.
-	
-* 5. Style Binding: Style binding is used to set a style of a view element.
-```HTML
-		<h1 [style.color]="blue">This is a Blue Heading</h1>
-```
-
-## 2. Two-way Data Binding in Angular
-- Two-way data binding in Angular will help users to exchange data from the component to view and from view to the component.
-
-```html
-	<input type="text" [(ngModel)] = 'val' />
-```	
-Before using ngModel to achieve two-way data binding, it’s very important to import the FormsModule from @angular/forms in app.module.ts file as shown below. FormsModule will contain the ngModule directive.
-
-```TypeScript
-	import { NgModule } from '@angular/core'; 
-	import { FormsModule } from "@angular/forms";
-```
-
-## Have you used onclick function in angular ? Write syntax for that.
-
-```html
-<button (click)=”handleClick($event)” type=”button”>Button</button>
-```
-## Write syntax for ngModel directive.
-
-```HTML
-<input [(ngModel)]="name" #it="ngModel" required>
-<p>Value: {{ name }}</p>
-<p>Valid: {{ it.valid }}</p>
-<button (click)="setValue()">Set value</button>
-``` 
 
 ## Waterfall Methodology of Software Devolopment life cycle (SDLC).
 1. **Requirements**
