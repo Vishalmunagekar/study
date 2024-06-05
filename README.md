@@ -565,6 +565,99 @@ A marker interface in Java is an interface that does not contain any methods or 
 2. **Cloneable** : The `Cloneable` interface indicates that a class allows for field-for-field copying through the Object.clone() method. If a class does not implement Cloneable and its clone method is called, a `CloneNotSupportedException` is thrown.
 3. **Remote** : The `Remote` interface is used in RMI (Remote Method Invocation) to indicate that a class can be invoked remotely.
 
+## Functional Interfaces :
+Functional interfaces in Java are interfaces that have exactly one abstract method. These interfaces are intended to represent single abstract functionality that can be implemented using lambda expressions or method references. The concept of functional interfaces was introduced in Java 8 to support the functional programming paradigm and make the language more expressive and concise.
+
+### Key Features of Functional Interfaces
+- **Single Abstract Method** : A functional interface has only one abstract method. This method defines the contract that the lambda expression or method reference implements.
+- **@FunctionalInterface Annotation** : While optional, this annotation can be used to indicate that an interface is intended to be a functional interface. The compiler will enforce this by generating an error if the interface doesn't conform to the rules of a functional interface.
+- **Default and Static Methods** : A functional interface can have any number of default or static methods without affecting its status as a functional interface because these are not abstract methods.
+
+
+- **Summary** : Functional interfaces in Java are a powerful feature that facilitates the use of lambda expressions and method references, enabling a more functional programming style. They provide a way to pass behavior as a parameter and make the code more readable and concise. The @FunctionalInterface annotation ensures that an interface meets the requirements of a functional interface, providing compile-time checking. Built-in functional interfaces like Function, Consumer, Supplier, Predicate, and BinaryOperator cover a wide range of common use cases, and custom functional interfaces can be easily created as needed.
+
+1. **Consumer & BiConsumer**
+```java
+public class ConsumerExample {
+    public static void main(String[] args) {
+        //Consumer
+        Consumer<String> c1 = s -> System.out.println(s);
+        c1.accept("We are using Consumer<T> interface..."); // accept is the functional method
+        
+        List<Integer> list = new ArrayList<>();
+        list.add(10); list.add(20); list.add(30); list.add(40);
+
+        Consumer<Integer> c3 = n -> System.out.println(n);
+        list.forEach(c3);
+
+        BiConsumer<Integer, String> c2 = (a , b) -> System.out.println(a + " " + b);
+        c2.accept(10, " <- Ten"); // we call BiConsumer directly like this 
+
+        //BiConsumer
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "One");
+        map.put(2, "Two");
+        map.put(3, "Three");
+        map.put(4, "Four");
+
+        BiConsumer<Integer, String> bc = (number, value) -> System.out.println(number + " " + value);
+        map.forEach(bc);
+    }
+}
+```
+2. **Supplier**
+```java
+public class SupplierExample {
+    public static void main(String[] args) {
+        Supplier<Integer> s1 = () -> 10;
+        System.out.println(s1.get()); // get is the functional method
+
+        Random random = new Random();
+        Supplier<Integer> s2 = () -> random.nextInt(1000000);
+        System.out.println(s2.get()); // will print random number
+        System.out.println(s2.get()); // will print random number
+    }
+}
+```
+3. Function & BiFunction
+```java
+public class FunctionInterface {
+    public static void main(String[] args) {
+        //Function< T , R >
+        Function<String, Integer> f1 = s -> s.length();
+        Integer length = f1.apply("Vishal_Munagekar"); // apply is the functional method
+        System.out.println(length); //16
+
+        //BiFunction<T, U, R>
+        BiFunction<String, String, Integer> bf = (s1, s2) -> s1.length() + s2.length();
+        Integer length2 = bf.apply("Vishal", "Munagekar");
+        System.out.println(length2); //15
+    }
+}
+```
+4. Predicate & BiPredicate
+```java
+public class PredicateInterface {
+    public static void main(String[] args) {
+        //Predicate<T> always return boolean
+        Predicate<Integer> p1 = n -> n % 2 == 0;
+
+        boolean even1 = p1.test(10); // test is the functional method
+        System.out.println(even1);
+        boolean even2 = p1.test(5);
+        System.out.println(even2);
+
+        //BiPredicate<T, U>
+        BiPredicate<String, Integer> bp = (s , i) -> s.length() == i;
+
+        boolean bool1 = bp.test("vishal", 10);
+        System.out.println(bool1); //false
+        boolean bool2 = bp.test("vishalmunagekar", 15);
+        System.out.println(bool2); //true
+    }
+}
+```
+
 ## Spring boot annotations : 
 Annotations in Spring Boot are a form of metadata that provide information about the code and are used to influence the behavior of the application. They are a core part of the Spring Framework and play a crucial role in configuring Spring applications. Here are some key annotations in Spring Boot and their purposes:
 
