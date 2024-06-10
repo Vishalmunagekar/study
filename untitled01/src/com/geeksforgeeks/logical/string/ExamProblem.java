@@ -18,7 +18,7 @@ public class ExamProblem {
 
 
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         System.out.println(findBestScore(5, 3, new int[]{2, 1, 5, 3, 4}));
     }
 
@@ -33,4 +33,17 @@ public class ExamProblem {
         }
         return max;
     }
+
+    public static void main(String[] args) {
+        method(null);
+    }
+
+    public static void method(Object o) {
+        System.out.println("Object O");
+    }
+
+    public static void method(String s ) {
+        System.out.println("String s");
+    }
+
 }

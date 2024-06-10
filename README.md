@@ -126,6 +126,27 @@ class Main{
 		- NavigableMap
 			- TreeMap [c]
 	- HashTable [c] extends Dictionary [AC]
+
+### Differences between the **`List`** and **`Set`** interfaces
+The List and Set interfaces in Java are part of the Java Collections Framework and provide different ways of storing and managing groups of objects. Here are the key differences between the **`List`** and **`Set`** interfaces:
+- **List Interface**
+    - **Order** : Lists maintain the order of insertion. The elements are stored in a sequence, and the order in which elements are added is preserved.
+    - **Duplicates** : Lists allow duplicate elements. Multiple elements with the same value can be added.
+    - **Access** : Lists provide positional access and allow for elements to be retrieved, inserted, or modified by their index.
+    - **Implementation Classes** : Common implementations include `ArrayList`, `LinkedList`, `Vector`, and `Stack`.
+- **Set Interface**
+    - **Order** : Sets do not guarantee the order of elements. Some implementations like LinkedHashSet maintain insertion order, while others like HashSet do not.
+    - **Duplicates** : Sets do not allow duplicate elements. Each element must be unique.
+    - **Access** : Sets do not provide positional access. Elements cannot be accessed by an index, and operations are based on the elements themselves.
+    - **Implementation Classes** : Common implementations include `HashSet`, `LinkedHashSet`, and `TreeSet`.
+
+#### **Practical Usage Scenarios**
+- **`List`** : Use when you need an ordered collection that allows duplicates and where elements can be accessed by their index.
+    - **Example** : Maintaining a list of tasks in the order they were added, including possible duplicate tasks.
+    
+- **`Set`**: Use when you need a collection of unique elements, and the order of elements is not critical (or where you need a specific order with LinkedHashSet or sorting with TreeSet).
+    - **Example** : Storing a collection of unique user IDs.
+
 # List
 ## ArrayList
 - **Resizable Array** : ArrayList in Java is essentially a resizable-array implementation of the List interface. It can dynamically grow and shrink in size as elements are added or removed.
@@ -619,7 +640,7 @@ public class SupplierExample {
     }
 }
 ```
-3. Function & BiFunction
+3. **Function & BiFunction**
 ```java
 public class FunctionInterface {
     public static void main(String[] args) {
@@ -635,7 +656,7 @@ public class FunctionInterface {
     }
 }
 ```
-4. Predicate & BiPredicate
+4. **Predicate & BiPredicate**
 ```java
 public class PredicateInterface {
     public static void main(String[] args) {
@@ -780,6 +801,54 @@ public class MyRestController {
     }
 }
 ```
+## Bean scopes in Spring framework
+In the context of Spring Framework, bean scopes define the lifecycle and visibility of the beans within the Spring IoC (Inversion of Control) container. Understanding these scopes is crucial for managing the behavior and dependencies of beans in a Spring application
+1. **Singleton (default)** : 
+    - **Description** : Only one instance of the bean is created per Spring IoC container.
+    - **Use Case** : Shared, stateless beans like services or DAOs.
+    - **Lifecycle** : The single instance is created at container startup (eager initialization) or on first use (lazy initialization).
+2. **Prototype**
+    - **Description** : A new instance is created each time the bean is requested.
+    - **Use Case** : Stateful beans or those that maintain user-specific data.
+    - **Lifecycle** : Instances are created and configured every time they are requested from the container.
+3. **Request (Web-aware)**
+    - **Description** : A single instance is created for each HTTP request. Applicable only in a web-aware Spring application context.
+    - **Use Case** : Beans that need to be request-scoped, such as HTTP  request-specific attributes or information.
+    - **Lifecycle** : The instance is created and disposed of for each HTTP request.
+5. **Global Session (Portlets only)**
+    - **Description** : A single instance is created for the global HTTP session. Applicable only in a Portlet context.
+    - **Use Case** : Beans that need to be scoped to the global session in Portlet applications.
+    - **Lifecycle** : Similar to the session scope but specific to portlets.
+6. **Application**
+    - **Description** : A single instance is created for the lifecycle of a ServletContext.
+    - **Use Case** : Beans that need to be shared across multiple servlet-based applications running in the same ServletContext.
+    - **Lifecycle** : The instance is created when the ServletContext is initialized and disposed of when the ServletContext is destroyed.
+```java
+@Bean
+@Scope("prototype")
+@Scope("request")
+@Scope("globalSession")
+@Scope("application")
+public MyService myService() {
+    return new MyServiceImpl();
+}
+```
+- **Points to Note**
+    - **Custom Scopes** : Spring also allows defining custom scopes for more specific use cases.
+    - **Proxy Modes** : For scopes other than singleton and prototype, Spring uses proxies to manage the bean instances. Understanding proxy modes is also important.
+
+```java
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS) or 
+@Scope(proxyMode = ScopedProxyMode.INTERFACES)
+```
+
+- **Interview Tips**
+    - **Concept Understanding**: Explain each scope clearly with examples and typical use cases.
+    - **Differences**: Highlight the differences between each scope, especially singleton and prototype.
+    - **Web-aware Scopes** : Be ready to discuss scenarios involving web applications and how different scopes like request and session are managed.
+    - **Annotations** : Be familiar with using the @Scope annotation and its attributes.
+    - **Lifecycle Management** : Discuss how the lifecycle of beans is managed in different scopes and how it affects application design.
+
 ### Dependency Injection
 - Dependency Injection is a fundamental aspect of the Spring framework, through which the Spring container “injects” objects into other objects or “dependencies”. Simply put, this allows for loose coupling of components and moves the responsibility of managing components onto the container.
 - Dependency injection is a pattern we can use to implement IoC, where the control being inverted is setting an object's dependencies.Connecting objects with other objects, or “injecting” objects into other objects, is done by an assembler rather than by the objects themselves.
@@ -1053,6 +1122,45 @@ COMMIT / ROLLBACK;
 * Left outer join
 * Right outer join
 * Cross join
+
+## Compilers used in angular
+In Angular, the primary compilers used are the Just-in-Time (JIT) compiler and the Ahead-of-Time (AOT) compiler. Each of these compilers serves different purposes and is used in different stages of application development and deployment. Here's an overview of these compilers:
+- **Just-in-Time (JIT) Compiler**
+    - **Purpose** : JIT compilation is used during the development phase.
+    - **Process**: The Angular application code is compiled in the browser at runtime. When the application is loaded, Angular compiles the TypeScript code and templates into JavaScript.
+    - **Advantages** : 
+        1. Faster development builds: Since JIT compilation happens at runtime, the build process is usually quicker.
+        2. Easier debugging: Source maps are easier to use, and you can debug TypeScript directly.
+    - **Disadvantages**: 
+        1. Larger bundle size: Since the compiler is included in the bundle, the application size is larger.
+        2. Slower initial load time: The application takes longer to start because the compilation happens in the browser.
+
+- **Ahead-of-Time (AOT) Compiler**
+    - **Purpose** : AOT compilation is used during the production phase.
+    - **Process**: The application code is compiled at build time, before the browser downloads and runs the code. The templates and TypeScript code are converted to efficient JavaScript code during the build process.
+    - **Advantages** : 
+        1. Smaller bundle size: The compiler is not included in the bundle, resulting in a smaller application size.
+        2. Faster initial load time: The application starts faster because the code is already compiled.
+        3. Early error detection: Compilation errors are caught during the build process, reducing runtime errors.
+        4. Improved security: Templates are pre-compiled, making it harder for attackers to inject malicious code.
+    - **Disadvantages**: 
+        1. Slower build process: AOT compilation takes more time during the build phase compared to JIT.
+
+- **Choosing Between JIT and AOT**
+    - **Development** : JIT is typically used for development because it provides faster build times and easier debugging. below command by default uses JIT compilation.
+    ```sh
+    ng serve
+    ```
+    - **Production** : AOT is preferred for production builds because it produces smaller bundles and improves the application's performance. Below command enables AOT compilation for the production build.
+    ```sh
+    ng build --prod
+    ```
+- **Other Tools and Concepts**
+    - **Angular Ivy** : Ivy is Angular's next-generation compilation and rendering engine. With Ivy, both `JIT` and `AOT` have seen significant improvements in terms of build speed and bundle size.
+
+        - Tree-shaking: Ivy enables better tree-shaking, resulting in smaller bundles by removing unused code.
+        - Locality: Ivy compiles components independently, which improves incremental build times and reduces the complexity of the compilation process.
+    - **Bazel** : Bazel is a build tool that can be used with Angular to manage large-scale applications. It allows for incremental builds and can significantly speed up the build process by only recompiling changed parts of the application.
 
 ## Directives in Angular
 In Angular, directives are special markers on a DOM element (such as an attribute, element name, class, or comment) that tell Angular's compiler to attach a specified behavior to that DOM element. Directives are an essential feature of Angular as they allow you to extend HTML's capabilities and create reusable components.
@@ -1389,3 +1497,51 @@ public class Account
 4. **Testing**
 5. **Deployment**
 6. **Review/Feedback**
+
+
+### Spring Boot Actuator
+Spring Boot Actuator is a sub-project of Spring Boot that provides a suite of built-in endpoints and tools for monitoring and managing Spring Boot applications in production environments. It offers a way to gain insights into the application's health, metrics, and various runtime information.
+
+- **Key Features** :
+
+1. **Health Checks** : 
+    - Provides health indicators to check the status of various parts of the application, such as the database, message brokers, or custom components.
+    - Accessible via the `/actuator/health` endpoint.
+2. **Metrics** :
+    - Exposes various metrics related to the application performance, such as memory usage, CPU usage, and request statistics.
+    - Metrics can be accessed via the `/actuator/metrics` endpoint.
+3. **Environment Information** :
+    - Displays environment properties, including system properties, configuration properties, and command-line arguments.
+    - Available through the `/actuator/env` endpoint.
+4. **Application Info** :
+    - Provides details about the application, like build information and version.
+    - This information is accessible via the /actuator/info endpoint.
+5. **HTTP Trace**:
+    - Records HTTP requests and responses, useful for auditing and debugging.
+Can be accessed via the `/actuator/httptrace` endpoint.
+6. **Thread Dump** :
+    - Shows the current state of the application's threads, helpful for diagnosing performance issues.
+    - Accessible via the `/actuator/threaddump` endpoint.
+
+**Usage** :
+
+- **Configuration** :
+    - Actuator endpoints can be enabled or disabled through the `application.properties` or `application.yml` configuration files.
+    - Security settings can be applied to restrict access to sensitive endpoints.
+- **Integration** :
+    - Actuator can integrate with monitoring tools like Prometheus, Grafana, and more for advanced monitoring and alerting capabilities.
+- **Example Configuration** : In application.properties:
+```properties
+management.endpoints.web.exposure.include=*
+management.endpoint.health.show-details=always
+```
+- **Security Considerations** :
+    - Ensure sensitive endpoints are secured and not exposed to unauthorized users, especially in production environments.
+    - Use Spring Security to restrict access based on roles or authentication.
+
+- **Importance in Real-World Applications:**
+    - Helps in proactive monitoring and management of the application.
+    - Simplifies troubleshooting by providing real-time insights into the application’s state.
+    - Essential for maintaining the reliability and performance of the application in production.
+
+what are the best practices to build spring application?
