@@ -554,7 +554,7 @@ Output :
 Finally block
 Try block
 ```
-##  Final keywork
+##  Final keyword
 In Java, the `final` keyword is used to apply restrictions on classes, methods, and variables. Its purpose is to prevent further modification and to enhance the safety and predictability of your code. Here’s how it is used:
 #### Final Variables
 - When a variable is declared with the `final` keyword, its value cannot be modified after it is initialized. This makes the variable a constant.
@@ -572,6 +572,16 @@ In Java, the `final` keyword is used to apply restrictions on classes, methods, 
 3. Final Class: A class that cannot be subclassed.
 4. Final Parameter: A parameter whose value cannot be modified within the method.
 - Using the `final` keyword appropriately can help in writing more *robust*, *secure*, and *maintainable* code by explicitly preventing unintended modifications.
+
+
+## static
+The **static** keyword in Java is used to declare a member variable or method that belongs to the class itself, rather than to an instance of the class. This means that static members can be accessed without creating an instance of the class.
+
+1. Static variables are shared by all instances of the class.
+2. Static methods can be called without creating an instance of the class.
+3. Static members can be accessed using the class name, rather than an instance variable.
+4. Static members are initialized before any instance of the class is created.
+5. Static members can only access other static members.
 
 ## marker interfaces
 A marker interface in Java is an interface that does not contain any methods or constants. It is used to indicate that a class implementing the interface has some special property or behavior. Marker interfaces are used to provide additional information about an object to the compiler and JVM. This information can be used to perform certain actions or optimizations.
@@ -1543,5 +1553,13 @@ management.endpoint.health.show-details=always
     - Helps in proactive monitoring and management of the application.
     - Simplifies troubleshooting by providing real-time insights into the application’s state.
     - Essential for maintaining the reliability and performance of the application in production.
+
+### what if we provide application.properties and application.yml at the same time
+- Yes! We can use both at same time in same project.
+- When you use both `YML` and `properties` at same time, say for example
+`application.yml` and `application.properties` at same time in same
+project, first `application.yml` will be loaded, later
+`application.properties` will be loaded.
+- Important point to be noted is that if `application.yml` and `application.properties` have same keys for example in `application.yml` has `spring.app.name = testYML` and `application.properties` has `spring.app.name = testProperties` at same time in same project, then `application.yml` value will be overwritten by `application.properties` value since it is loading at last. And the value in `spring.app.name = testProperties`.
 
 what are the best practices to build spring application?
