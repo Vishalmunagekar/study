@@ -1562,4 +1562,112 @@ project, first `application.yml` will be loaded, later
 `application.properties` will be loaded.
 - Important point to be noted is that if `application.yml` and `application.properties` have same keys for example in `application.yml` has `spring.app.name = testYML` and `application.properties` has `spring.app.name = testProperties` at same time in same project, then `application.yml` value will be overwritten by `application.properties` value since it is loading at last. And the value in `spring.app.name = testProperties`.
 
-what are the best practices to build spring application?
+## ACID properties 
+The ACID properties of a database are a set of principles that ensure reliable processing of database **transactions**. ACID stands for **Atomicity**, **Consistency**, **Isolation**, and **Durability**. Here’s a breakdown of each property:
+
+- Atomicity:
+
+    - **Definition**: Ensures that a series of database operations (a transaction) are either fully completed or not executed at all.
+    - **Example**: In a banking system, if a transaction involves transferring money from Account A to Account B, atomicity ensures that both the debit from Account A and the credit to Account B occur together. If any part of the transaction fails, no part of it is applied.
+
+- **Consistency**:
+
+    - **Definition**: Guarantees that a transaction will bring the database from one valid state to another, maintaining database invariants.
+    - **Example**: Suppose a database rule requires the total amount of money in both Account A and Account B to remain constant. Consistency ensures that after a transaction, this rule is still upheld, meaning the total amount of money before and after the transaction is the same.
+
+- **Isolation**:
+
+    - **Definition**: Ensures that concurrent execution of transactions results in a system state that would be obtained if transactions were executed sequentially.
+    - **Example**: If two transactions are being executed simultaneously, one adding money to Account A and the other transferring money from Account A to Account B, isolation ensures that each transaction does not interfere with the other, and the final result is as if they were executed one after the other.
+
+- **Durability**:
+
+    - **Definition**: Ensures that once a transaction has been committed, it will remain so, even in the event of a system failure.
+    - **Example**: After a transaction has been successfully executed and the changes committed, these changes are permanently recorded in the database. If the system crashes immediately afterward, the committed changes will still be present when the system is back online.
+
+Together, these properties ensure that database transactions are processed reliably and predictably, which is crucial for the integrity and consistency of data in any system.
+
+## MySQL Problem
+
+```sql
+-- Create EMPLOYEE table
+CREATE TABLE EMPLOYEE (
+    emp_id INT PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+-- Create ADDRESS table
+CREATE TABLE ADDRESS (
+    addr_id INT PRIMARY KEY,
+    emp_id INT,
+    city VARCHAR(100),
+    FOREIGN KEY (emp_id) REFERENCES EMPLOYEE(emp_id)
+);
+
+-- Create SALARY table
+CREATE TABLE SALARY (
+    salary_id INT PRIMARY KEY,
+    emp_id INT,
+    amount DECIMAL(10, 2),
+    FOREIGN KEY (emp_id) REFERENCES EMPLOYEE(emp_id)
+);
+
+-- Insert data into EMPLOYEE table
+INSERT INTO EMPLOYEE (emp_id, name) VALUES (1, 'John Doe');
+INSERT INTO EMPLOYEE (emp_id, name) VALUES (2, 'Jane Smith');
+INSERT INTO EMPLOYEE (emp_id, name) VALUES (3, 'Alice Johnson');
+
+-- Insert data into ADDRESS table
+INSERT INTO ADDRESS (addr_id, emp_id, city) VALUES (1, 1, 'Pune');
+INSERT INTO ADDRESS (addr_id, emp_id, city) VALUES (2, 2, 'Mumbai');
+INSERT INTO ADDRESS (addr_id, emp_id, city) VALUES (3, 3, 'Pune');
+
+-- Insert data into SALARY table
+INSERT INTO SALARY (salary_id, emp_id, amount) VALUES (1, 1, 120000);
+INSERT INTO SALARY (salary_id, emp_id, amount) VALUES (2, 2, 95000);
+INSERT INTO SALARY (salary_id, emp_id, amount) VALUES (3, 3, 130000);
+
+-- View contents of EMPLOYEE table
+SELECT * FROM EMPLOYEE;
+
+-- View contents of ADDRESS table
+SELECT * FROM ADDRESS;
+
+-- View contents of SALARY table
+SELECT * FROM SALARY;
+```
+
+## EMPLOYEE Table
+|		**emp_id**             |			**name**		               |
+|------------------------------|-------------------------------------------|
+| 1                            |            John Doe                       |
+| 2                            |            Jane Smith                     |
+| 3                            |            Alice Johnson                  |
+
+## ADDRESS Table
+|		**addr_id**    |    **emp_id**      |       **city**                |
+|----------------------|--------------------|-------------------------------|
+| 1                    |   1         |          Pune                 |
+| 2                    |   2       |          Mumbai               |
+| 3                    |   3    |           Pune                |
+
+## SALARY Table
+|		**salary_id**  |    **emp_id**      |      **amount**               |
+|----------------------|--------------------|-------------------------------|
+| 1                    |   1                |          120000               |
+| 2                    |   2                |          95000                |
+| 3                    |   3                |           130000              |
+
+
+### get the employee names with a salary greater than 100,000 and who live in Pune:
+
+```sql
+-- INNER JOIN query
+SELECT e.name
+FROM EMPLOYEE e
+JOIN ADDRESS a ON e.emp_id = a.emp_id
+JOIN SALARY s ON e.emp_id = s.emp_id
+WHERE s.amount > 100000
+AND a.city = 'Pune';
+
+```
