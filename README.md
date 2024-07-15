@@ -417,10 +417,84 @@ Output :
 106 : null
 107 : BlackWidow
 ```
-## What is Interface in java ?
-- The interface in Java is a mechanism to achieve abstraction.
-- There can be only abstract methods in the Java interface, not method body (Concreate methods).
-- It is used to achieve abstraction and multiple inheritance in Java.
+## when to use Abstract class and Interface in java ?
+In Java, both abstract classes and interfaces are used to achieve abstraction, but they have different use cases and characteristics. Here’s a comparison to help determine when to use each:
+
+### Abstract Class
+An abstract class is a class that cannot be instantiated on its own and is meant to be subclassed. It can have both abstract methods (without a body) and concrete methods (with a body).
+
+#### Use an abstract class when:
+1. **Shared State or Implementation** : You want to share code among several closely related classes. Abstract classes allow you to define methods that can be shared among subclasses.
+2. **Partial Implementation** : You have a base class that provides some default behavior, and subclasses will provide the rest.
+3. **Common Base Class** : You have classes that should be treated as the same type, and you want to use polymorphism.
+4. **Non-Abstract Methods** : You want to provide some common non-abstract methods to subclasses.
+5. **State Representation** : You need to maintain a state (fields) that can be inherited by subclasses.
+
+```java
+public abstract class Animal {
+    private String name;
+
+    public Animal(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    // Abstract method
+    public abstract void makeSound();
+
+    // Non-abstract method
+    public void sleep() {
+        System.out.println("Sleeping...");
+    }
+}
+
+public class Dog extends Animal {
+    public Dog(String name) {
+        super(name);
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println("Woof!");
+    }
+}
+```
+
+### Interface
+An interface is a reference type in Java, similar to a class, that can contain only constants, method signatures, default methods, static methods, and nested types. Interfaces cannot contain instance fields.
+
+#### Use an interface when:
+1. **Multiple Inheritance** : You need to implement multiple inheritance. A class can implement multiple interfaces, which is not possible with abstract classes.
+2. **Unrelated Classes** : You want to define a contract that can be implemented by any class, from any inheritance tree. Interfaces are a good way to ensure that different classes follow a certain protocol.
+3. **API Design** : You want to define the capabilities that a class must provide without dictating how they should be implemented.
+4. **Non-Abstract Methods** : You want to provide some common non-abstract methods to subclasses.
+5. **Functional Programming** : You need to use functional interfaces, especially for lambda expressions (e.g., Runnable, Callable, or custom functional interfaces).
+
+```java
+public interface Animal {
+    void makeSound();
+    void sleep();
+}
+
+public class Dog implements Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Woof!");
+    }
+
+    @Override
+    public void sleep() {
+        System.out.println("Sleeping...");
+    }
+}
+```
+
+#### Summary
+- **Abstract Class** : Use when you have a clear hierarchy, need to share code among closely related classes, and need to maintain a state.
+- **Interface** : Use when you need to define a contract for classes to follow, especially when multiple inheritance or unrelated classes are involved.
 
 ## why we can't create object of interface in java?
 - Interface is basically a complete abstract class.
@@ -1308,7 +1382,7 @@ Before using ngModel to achieve two-way data binding, it’s very important to i
 ### 1. Lazy Instatiation
 ```java
 public class Singleton {
-	public Singleton() { 	}
+	private Singleton() { 	}
 	
 	private static Singleton instance;
 

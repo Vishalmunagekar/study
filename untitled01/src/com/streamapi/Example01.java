@@ -24,67 +24,72 @@ public class Example01 {
 
         //  1- Find list of students whose first name starts with alphabet A
         Stream<Student> studentStream = list.stream().filter((student) -> student.getFirstName().startsWith("A"));
-        studentStream.forEach(System.out::println);
+        //studentStream.forEach(System.out::println);
 
         //  2- Group The Student By Department Names
         Map<String, List<Student>> mapOfStudentDept = list.stream().collect(Collectors.groupingBy(Student::getDepartmantName));
-        System.out.println(mapOfStudentDept);
+        //System.out.println(mapOfStudentDept);
 
         // 3- Find the total count of student using stream
         long count = list.stream().count();
-        System.out.println(count);
+        //System.out.println(count);
 
         // 4- Find the max age of student
         OptionalInt maxAge = list.stream().mapToInt((student) -> student.getAge()).max();
-        System.out.println(maxAge.getAsInt());
+        //System.out.println(maxAge.getAsInt());
 
         // 5- Find all departments names
         List<String> deptList = list.stream().map((student) -> student.getDepartmantName()).distinct().collect(Collectors.toList());
-        System.out.println(deptList);
+        //System.out.println(deptList);
 
         // 6- Find the count of student in each department
         Map<String, Long> collect = list.stream().collect(Collectors.groupingBy(Student::getDepartmantName, Collectors.counting()));
-        System.out.println(collect);
+        //System.out.println(collect);
 
         // 7- Find the list of students whose age is less than 30
         List<Student> studentList = list.stream().filter(student -> student.getAge() < 30).collect(Collectors.toList());
-        System.out.println(studentList);
+        //System.out.println(studentList);
 
         // 8- Find the list of students whose rank is in between 50 and 100
         List<Student> rankInBtwn50To100 = list.stream().filter(student -> student.getRank() > 50 && student.getRank() < 100).collect(Collectors.toList());
-        System.out.println(rankInBtwn50To100);
+        //System.out.println(rankInBtwn50To100);
 
         //9- Find the average age of male and female students
         Map<String, Double> mapAvgAge = list.stream().collect(Collectors.groupingBy(Student::getGender, Collectors.averagingInt(Student::getAge)));
-        System.out.println(mapAvgAge);
+        //System.out.println(mapAvgAge);
 
         // 10- Find the department who is having maximum number of students
         Map<String, Long> mapDeptCount = list.stream().collect(Collectors.groupingBy(Student::getDepartmantName, Collectors.counting()));
+        //System.out.println(mapDeptCount);
         Map.Entry<String, Long> entry = mapDeptCount.entrySet().stream().max(Map.Entry.comparingByValue()).get();
-        System.out.println(entry);
+        //System.out.println(entry);
 
         // 11- Find the Students who stays in Mumbai and sort them by their names
         List<Student> mumbaiStudents = list.stream()
                 .filter(student -> student.getCity().equalsIgnoreCase("Mumbai"))
                 .sorted(Comparator.comparing(Student::getFirstName))
                 .collect(Collectors.toList());
-        System.out.println(mumbaiStudents);
+        //System.out.println(mumbaiStudents);
 
         // 12- Find the average rank in all departments
         Map<String, Double> deptStudentRanks = list.stream().collect(Collectors.groupingBy(Student::getDepartmantName, Collectors.averagingInt(Student::getRank)));
-        System.out.println(deptStudentRanks);
+        //System.out.println(deptStudentRanks);
 
         // 13- Find the highest rank in each department
         Map<String, Optional<Student>> highestRankDept = list.stream().collect(Collectors.groupingBy(Student::getDepartmantName, Collectors.maxBy(Comparator.comparing(Student::getRank))));
-        System.out.println(highestRankDept);
+        //System.out.println(highestRankDept);
 
         // 14- Find the list of students and sort them by their rank
         List<Student> sortedByRank = list.stream().sorted(Comparator.comparing(Student::getRank)).collect(Collectors.toList());
-        System.out.println(sortedByRank);
+        //System.out.println(sortedByRank);
+
+        // 14.2- Find the list of students name and sort them by their rank
+        List<String> stringList = list.stream().sorted(Comparator.comparing(Student::getRank)).map(Student::getFirstName).collect(Collectors.toList());
+        //System.out.println(stringList);
 
         // 15- Find the student who has second rank
         Student student = list.stream().sorted(Comparator.comparing(Student::getRank)).skip(1).findFirst().get();
-        System.out.println(student);
+        //System.out.println(student);
 
         // 16- Merge two Employee ArrayList and sort by age in using java8 stream API
         List<Student> newList = Stream.concat(list.stream(), list.stream()).sorted(Comparator.comparing(Student::getAge)).collect(Collectors.toList());
@@ -94,7 +99,7 @@ public class Example01 {
 
         int sum = numbers.stream().filter(num -> num % 2 == 0)
                 .mapToInt(Integer::intValue).sum();
-        System.out.println(sum);
+        //System.out.println(sum);
 
         // 18- Sort student by name and rank
         List<Student> sortedByNameAndByRank = list.stream().sorted(Comparator.comparing(Student::getFirstName).thenComparing(Student::getRank)).collect(Collectors.toList());
@@ -106,7 +111,7 @@ public class Example01 {
 
 
         Integer reduce = numbers.stream().reduce(0, (a, b) -> a + b);
-        System.out.println(reduce);
+        //System.out.println(reduce);
 
         List<List<Integer>> nestedLists = Arrays.asList(
                 Arrays.asList(1, 2),
@@ -115,19 +120,19 @@ public class Example01 {
         );
 
         List<Integer> integerList = nestedLists.stream().flatMap(List::stream).collect(Collectors.toList());
-        System.out.println(integerList);
+        //System.out.println(integerList);
 
 
         Integer max = numbers.stream().max(Integer::compare).get();
         Integer min = numbers.stream().min(Integer::compare).get();
-        System.out.println(max);
-        System.out.println(min);
+        //System.out.println(max);
+        //System.out.println(min);
 
         Integer findFirst = numbers.stream().filter(num -> num % 2 == 0).findFirst().get();
 
         Integer findAny = numbers.stream().filter(num -> num % 2 == 0).findAny().get();
-        System.out.println(findFirst); // 2
-        System.out.println(findAny); // 2
+        //System.out.println(findFirst); // 2
+        //System.out.println(findAny); // 2
 
 
         String str = "VISHAL MUNAGEKAR"; //sort this and make it distinct
@@ -139,7 +144,7 @@ public class Example01 {
                 .mapToObj(value -> (char) value)
                 .map(String::valueOf).collect(Collectors.joining());
 
-        System.out.println(collect1);
+        //System.out.println(collect1);
     }
 
 
