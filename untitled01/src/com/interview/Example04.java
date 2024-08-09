@@ -13,18 +13,16 @@ public class Example04 {
         String[] arr = new String[]{"eat","tea","tan","ate","nat","bat"};
         Map<String, List<String>> stringListMap = new HashMap<>();
 
-        for (String word : arr){
+        for(String word : arr){
             char[] charArray = word.toCharArray();
             Arrays.sort(charArray);
             String sortedWord = new String(charArray);
             if(!stringListMap.containsKey(sortedWord)){
-                stringListMap.put(sortedWord,new ArrayList<>());
+                stringListMap.put(sortedWord, new ArrayList<>());
             }
             stringListMap.get(sortedWord).add(word);
         }
-
         System.out.println(stringListMap.values());
-
     }
 
 }
