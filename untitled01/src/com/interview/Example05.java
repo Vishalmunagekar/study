@@ -16,22 +16,18 @@ public class Example05 {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5, 6};
         int target = 7;
-
-        List<Integer[]> resultList = new ArrayList<>();
-        Map<Integer, Integer> integerMap = new HashMap<>();
-
-
-        for (int num : arr){
+        List<Integer[]> arrayList = new ArrayList<>();
+        Map<Integer, Integer> integerListMap = new HashMap<>();
+        for(int num : arr){
             int complement = target - num;
-
-            if(integerMap.containsKey(complement)){
-                resultList.add(new Integer[]{complement, num});
+            if(integerListMap.containsKey(complement)){
+                arrayList.add(new Integer[]{complement, num});
             }
-            integerMap.put(num, 1);
+            integerListMap.put(num, 1);
         }
 
-        resultList.forEach((val) -> {
-            System.out.print("(" + val[0] + " " + val[1] + ")" );
+        arrayList.forEach((val) -> {
+            System.out.println(val[0] + " " + val[1]);
         });
     }
 }
