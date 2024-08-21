@@ -90,7 +90,7 @@ class Bmw extends Bike{
 class Main{    
   public static void main(String args[]){  
     Bike b = new Bmw();//upcasting  
-    b.run();  
+    b.run();  // Running safely with 120km/hr
   }  
 } 
 ```
@@ -525,8 +525,8 @@ public int compareTo(Student per) {
 ```
 ### **Comparator :**
 0. This interface contains two methods
-..1. int compare(Object obj1,Object obj2);
-..2. boolean equals(Object element);
+    1. int compare(Object obj1,Object obj2);
+    2. boolean equals(Object element);
 1. java.util package
 2. Compare an object with other objects of the same type
 
@@ -706,82 +706,165 @@ Functional interfaces in Java are interfaces that have exactly one abstract meth
 
 1. **Consumer & BiConsumer**
 ```java
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.BiConsumer;
+
 public class ConsumerExample {
     public static void main(String[] args) {
-        //Consumer
-        Consumer<String> c1 = s -> System.out.println(s);
-        c1.accept("We are using Consumer<T> interface..."); // accept is the functional method
-        
-        List<Integer> list = new ArrayList<>();
-        list.add(10); list.add(20); list.add(30); list.add(40);
+        // Example 1: Simple Consumer to print a string
+        Consumer<String> printConsumer = s -> System.out.println(s);
+        printConsumer.accept("We are using Consumer<T> interface..."); // The accept method consumes the input string
 
-        Consumer<Integer> c3 = n -> System.out.println(n);
-        list.forEach(c3);
+        // Example 2: Using Consumer with a list
+        List<Integer> numberList = new ArrayList<>(Arrays.asList(10, 20, 30, 40));
 
-        BiConsumer<Integer, String> c2 = (a , b) -> System.out.println(a + " " + b);
-        c2.accept(10, " <- Ten"); // we call BiConsumer directly like this 
+        // Consumer to print each element in the list
+        Consumer<Integer> printNumber = n -> System.out.println(n);
+        numberList.forEach(printNumber); // forEach method uses the Consumer to process each element
 
-        //BiConsumer
-        Map<Integer, String> map = new HashMap<>();
-        map.put(1, "One");
-        map.put(2, "Two");
-        map.put(3, "Three");
-        map.put(4, "Four");
+        // Example 3: BiConsumer to combine two different types of input
+        BiConsumer<Integer, String> printNumberWithText = (a, b) -> System.out.println(a + " " + b);
+        printNumberWithText.accept(10, " <- Ten"); // Directly calling BiConsumer with two arguments
 
-        BiConsumer<Integer, String> bc = (number, value) -> System.out.println(number + " " + value);
-        map.forEach(bc);
+        // Example 4: Using BiConsumer with a Map
+        Map<Integer, String> numberMap = new HashMap<>();
+        numberMap.put(1, "One");
+        numberMap.put(2, "Two");
+        numberMap.put(3, "Three");
+        numberMap.put(4, "Four");
+
+        // BiConsumer to print each key-value pair in the map
+        BiConsumer<Integer, String> printMapEntry = (number, value) -> System.out.println(number + " -> " + value);
+        numberMap.forEach(printMapEntry); // forEach method uses the BiConsumer to process each entry in the map
+
+        // Example 5: Chaining Consumers
+        Consumer<Integer> multiplyByTwo = n -> System.out.println(n * 2);
+        Consumer<Integer> squareNumber = n -> System.out.println(n * n);
+
+        // Combining two Consumers: first multiply by two, then print the square
+        Consumer<Integer> combinedConsumer = multiplyByTwo.andThen(squareNumber);
+
+        System.out.println("Chained Consumer example:");
+        numberList.forEach(combinedConsumer);
     }
 }
 ```
 2. **Supplier**
 ```java
+import java.util.*;
+import java.util.function.Supplier;
+
 public class SupplierExample {
     public static void main(String[] args) {
-        Supplier<Integer> s1 = () -> 10;
-        System.out.println(s1.get()); // get is the functional method
+        // Example 1: Simple Supplier that returns a fixed value
+        Supplier<String> stringSupplier = () -> "Hello from Supplier!";
+        System.out.println(stringSupplier.get()); // Calling get() to retrieve the value from the Supplier
 
-        Random random = new Random();
-        Supplier<Integer> s2 = () -> random.nextInt(1000000);
-        System.out.println(s2.get()); // will print random number
-        System.out.println(s2.get()); // will print random number
+        // Example 2: Supplier that generates a random number
+        Supplier<Integer> randomNumberSupplier = () -> new Random().nextInt(100); // Generates a random number between 0 and 99
+        System.out.println("Random Number: " + randomNumberSupplier.get());
+
+        // Example 3: Supplier that returns the current date and time
+        Supplier<Date> dateSupplier = () -> new Date();
+        System.out.println("Current Date and Time: " + dateSupplier.get());
+
+        // Example 4: Supplier with complex object creation
+        Supplier<List<String>> listSupplier = () -> Arrays.asList("Apple", "Banana", "Cherry");
+        List<String> fruitList = listSupplier.get();
+        System.out.println("Fruit List: " + fruitList);
+
+        // Example 5: Supplier with a factory method pattern
+        Supplier<UUID> uuidSupplier = UUID::randomUUID; // Method reference to generate UUID
+        System.out.println("Generated UUID: " + uuidSupplier.get());
     }
 }
 ```
 3. **Function & BiFunction**
 ```java
-public class FunctionInterface {
-    public static void main(String[] args) {
-        //Function< T , R >
-        Function<String, Integer> f1 = s -> s.length();
-        Integer length = f1.apply("Vishal_Munagekar"); // apply is the functional method
-        System.out.println(length); //16
+import java.util.*;
+import java.util.function.Function;
+import java.util.function.BiFunction;
 
-        //BiFunction<T, U, R>
-        BiFunction<String, String, Integer> bf = (s1, s2) -> s1.length() + s2.length();
-        Integer length2 = bf.apply("Vishal", "Munagekar");
-        System.out.println(length2); //15
+public class FunctionExample {
+    public static void main(String[] args) {
+        // Example 1: Simple Function to convert Integer to String
+        Function<Integer, String> intToStringFunction = i -> "Number: " + i;
+        System.out.println(intToStringFunction.apply(5)); // Outputs "Number: 5"
+
+        // Example 2: Function to calculate the square of a number
+        Function<Integer, Integer> squareFunction = n -> n * n;
+        System.out.println("Square of 4: " + squareFunction.apply(4)); // Outputs 16
+
+        // Example 3: Function chaining using andThen
+        Function<Integer, Integer> multiplyByTwo = n -> n * 2;
+        Function<Integer, Integer> squareAndMultiply = squareFunction.andThen(multiplyByTwo);
+
+        System.out.println("Square and then multiply by two of 3: " + squareAndMultiply.apply(3)); // Outputs 18
+
+        // Example 4: BiFunction to concatenate two strings
+        BiFunction<String, String, String> concatenateStrings = (s1, s2) -> s1 + " " + s2;
+        System.out.println(concatenateStrings.apply("Hello", "World")); // Outputs "Hello World"
+
+        // Example 5: BiFunction to add two numbers
+        BiFunction<Integer, Integer, Integer> addNumbers = (a, b) -> a + b;
+        System.out.println("Sum of 5 and 10: " + addNumbers.apply(5, 10)); // Outputs 15
+
+        // Example 6: Using BiFunction with andThen
+        BiFunction<Integer, Integer, Integer> multiplyNumbers = (a, b) -> a * b;
+        Function<Integer, String> intToString = n -> "Result: " + n;
+
+        // Multiply two numbers and then convert the result to a string
+        String result = multiplyNumbers.andThen(intToString).apply(5, 4);
+        System.out.println(result); // Outputs "Result: 20"
     }
 }
 ```
 4. **Predicate & BiPredicate**
 ```java
-public class PredicateInterface {
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.function.BiPredicate;
+
+public class PredicateExample {
     public static void main(String[] args) {
-        //Predicate<T> always return boolean
-        Predicate<Integer> p1 = n -> n % 2 == 0;
+        // Example 1: Simple Predicate to check if a number is even
+        Predicate<Integer> isEven = n -> n % 2 == 0;
+        System.out.println("Is 4 even? " + isEven.test(4)); // Outputs true
+        System.out.println("Is 7 even? " + isEven.test(7)); // Outputs false
 
-        boolean even1 = p1.test(10); // test is the functional method
-        System.out.println(even1);
-        boolean even2 = p1.test(5);
-        System.out.println(even2);
+        // Example 2: Predicate to check if a string is empty
+        Predicate<String> isEmpty = s -> s.isEmpty();
+        System.out.println("Is the string empty? " + isEmpty.test("")); // Outputs true
+        System.out.println("Is the string empty? " + isEmpty.test("Hello")); // Outputs false
 
-        //BiPredicate<T, U>
-        BiPredicate<String, Integer> bp = (s , i) -> s.length() == i;
+        // Example 3: Combining Predicates using and(), or(), and negate()
+        Predicate<String> isShortString = s -> s.length() <= 5;
+        Predicate<String> startsWithH = s -> s.startsWith("H");
 
-        boolean bool1 = bp.test("vishal", 10);
-        System.out.println(bool1); //false
-        boolean bool2 = bp.test("vishalmunagekar", 15);
-        System.out.println(bool2); //true
+        Predicate<String> combinedPredicate = isShortString.and(startsWithH);
+        System.out.println("Is 'Hello' a short string and starts with 'H'? " + combinedPredicate.test("Hello")); // Outputs true
+
+        Predicate<String> complexPredicate = isShortString.or(startsWithH).negate();
+        System.out.println("Is 'HelloWorld' neither a short string nor starts with 'H'? " + complexPredicate.test("HelloWorld")); // Outputs true
+
+        // Example 4: BiPredicate to check if one string contains another
+        BiPredicate<String, String> contains = (str, substr) -> str.contains(substr);
+        System.out.println("Does 'HelloWorld' contain 'World'? " + contains.test("HelloWorld", "World")); // Outputs true
+        System.out.println("Does 'HelloWorld' contain 'Java'? " + contains.test("HelloWorld", "Java")); // Outputs false
+
+        // Example 5: BiPredicate to check if the sum of two numbers is greater than a threshold
+        BiPredicate<Integer, Integer> sumGreaterThan = (a, b) -> (a + b) > 10;
+        System.out.println("Is the sum of 5 and 7 greater than 10? " + sumGreaterThan.test(5, 7)); // Outputs true
+        System.out.println("Is the sum of 3 and 4 greater than 10? " + sumGreaterThan.test(3, 4)); // Outputs false
+
+        // Example 6: Using BiPredicate with and()
+        BiPredicate<Integer, Integer> bothEven = (a, b) -> a % 2 == 0 && b % 2 == 0;
+        BiPredicate<Integer, Integer> bothPositive = (a, b) -> a > 0 && b > 0;
+
+        BiPredicate<Integer, Integer> combinedBiPredicate = bothEven.and(bothPositive);
+        System.out.println("Are both 4 and 8 even and positive? " + combinedBiPredicate.test(4, 8)); // Outputs true
+        System.out.println("Are both -2 and 8 even and positive? " + combinedBiPredicate.test(-2, 8)); // Outputs false
     }
 }
 ```
@@ -1376,6 +1459,289 @@ Before using ngModel to achieve two-way data binding, it’s very important to i
 	import { NgModule } from '@angular/core'; 
 	import { FormsModule } from "@angular/forms";
 ```
+
+## What is `trackBy` in angular ?
+In Angular, `trackBy` is a mechanism used to optimize the rendering of list items in an `*ngFor` directive. By default, when Angular renders a list using `*ngFor`, it tracks list items by their object reference. This means that if the list changes, Angular will re-render the entire list, even if only one item changes, because it doesn't know which items have changed.
+
+The `trackBy` function allows you to tell Angular how to track items in the list. By providing a custom `trackBy` function, you can specify a unique identifier (like an id or any other unique property) for each item, so Angular can keep track of which items have changed, been added, or removed. This results in more efficient DOM updates, as only the items that have actually changed will be re-rendered.
+```ts
+@Component({
+  selector: 'app-item-list',
+  template: `
+    <ul>
+      <li *ngFor="let item of items; trackBy: trackByFn">{{ item.name }}</li>
+    </ul>
+  `
+})
+export class ItemListComponent {
+  items = [
+    { id: 1, name: 'Item 1' },
+    { id: 2, name: 'Item 2' },
+    { id: 3, name: 'Item 3' }
+  ];
+
+  trackByFn(index: number, item: any): number {
+    return item.id;
+  }
+}
+```
+### Explanation
+- **Default Behavior**: Without trackBy, Angular would destroy and re-create all the DOM elements every time the list changes.
+- **Using `trackBy`**: In the example above, `trackByFn` tells Angular to track the items by their id property. This way, if only one item changes or is added, Angular will only update the affected DOM elements, rather than the entire list.
+
+*This can significantly improve performance, especially for large lists.*
+
+## Angular Lifecycle Hooks
+
+Certainly! Let’s go through each Angular lifecycle hook in more detail with example code. This will help solidify your understanding and prepare you for questions that might require you to discuss specific use cases or implementation details.
+
+### 1. `ngOnChanges`
+**Purpose**: Called when an input property changes. It is invoked before `ngOnInit` and whenever any data-bound input property changes.
+
+**Example**:
+
+```typescript
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `<p>{{data}}</p>`
+})
+export class ChildComponent implements OnChanges {
+  @Input() data: string;
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('ngOnChanges - data changed:', changes);
+  }
+}
+```
+
+- **Explanation**: The `ngOnChanges` method logs the changes made to the `data` input property whenever it is modified. The `SimpleChanges` object contains the current and previous value of the property.
+
+### 2. `ngOnInit`
+**Purpose**: Called once after the first `ngOnChanges`. It is typically used for component initialization.
+
+**Example**:
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-init-example',
+  template: `<p>{{message}}</p>`
+})
+export class InitExampleComponent implements OnInit {
+  message: string;
+
+  ngOnInit() {
+    this.message = 'Component initialized!';
+    console.log('ngOnInit - Component has been initialized');
+  }
+}
+```
+
+- **Explanation**: The `ngOnInit` hook initializes the `message` property. It’s a great place for initial data fetching or setup logic.
+
+### 3. `ngDoCheck`
+**Purpose**: Called during every change detection cycle. It allows you to implement custom change detection logic.
+
+**Example**:
+
+```typescript
+import { Component, DoCheck, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-check-example',
+  template: `<p>{{item}}</p>`
+})
+export class CheckExampleComponent implements DoCheck {
+  @Input() item: string;
+
+  ngDoCheck() {
+    console.log('ngDoCheck - Change detection cycle');
+  }
+}
+```
+
+- **Explanation**: `ngDoCheck` is called on every change detection run. This is useful if you want to implement custom checks that are not handled by Angular’s default change detection.
+
+### 4. `ngAfterContentInit`
+**Purpose**: Called once after Angular projects external content into the component's view (after content children have been initialized).
+
+**Example**:
+
+```typescript
+import { Component, AfterContentInit, ContentChild } from '@angular/core';
+
+@Component({
+  selector: 'app-content-child',
+  template: `<ng-content></ng-content>`
+})
+export class ContentChildComponent implements AfterContentInit {
+  @ContentChild('projectedContent') content;
+
+  ngAfterContentInit() {
+    console.log('ngAfterContentInit - Content has been projected:', this.content);
+  }
+}
+```
+
+- **Explanation**: This hook is useful when you want to access or manipulate projected content. `@ContentChild` allows you to reference the projected content inside the component.
+
+### 5. `ngAfterContentChecked`
+**Purpose**: Called after Angular checks the content projected into the component.
+
+**Example**:
+
+```typescript
+import { Component, AfterContentChecked, ContentChild } from '@angular/core';
+
+@Component({
+  selector: 'app-content-checked',
+  template: `<ng-content></ng-content>`
+})
+export class ContentCheckedComponent implements AfterContentChecked {
+  @ContentChild('projectedContent') content;
+
+  ngAfterContentChecked() {
+    console.log('ngAfterContentChecked - Content has been checked:', this.content);
+  }
+}
+```
+
+- **Explanation**: `ngAfterContentChecked` is triggered after every change detection cycle when the projected content is checked. This is useful for any post-check logic.
+
+### 6. `ngAfterViewInit`
+**Purpose**: Called once after the component's view and child views have been initialized.
+
+**Example**:
+
+```typescript
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
+
+@Component({
+  selector: 'app-view-init',
+  template: `<p #paragraphRef>View Initialized!</p>`
+})
+export class ViewInitComponent implements AfterViewInit {
+  @ViewChild('paragraphRef') paragraph;
+
+  ngAfterViewInit() {
+    console.log('ngAfterViewInit - View initialized:', this.paragraph);
+  }
+}
+```
+
+- **Explanation**: This hook is ideal for interacting with or manipulating DOM elements or child components after the view has been fully initialized. `@ViewChild` is used to reference the element in the template.
+
+### 7. `ngAfterViewChecked`
+**Purpose**: Called after Angular checks the component's views and child views.
+
+**Example**:
+
+```typescript
+import { Component, AfterViewChecked, ViewChild } from '@angular/core';
+
+@Component({
+  selector: 'app-view-checked',
+  template: `<p #paragraphRef>View Checked!</p>`
+})
+export class ViewCheckedComponent implements AfterViewChecked {
+  @ViewChild('paragraphRef') paragraph;
+
+  ngAfterViewChecked() {
+    console.log('ngAfterViewChecked - View checked:', this.paragraph);
+  }
+}
+```
+
+- **Explanation**: This hook runs after every change detection cycle when the view and child views are checked. It’s useful for post-view check logic, particularly when you need to ensure that certain UI updates have been applied.
+
+### 8. `ngOnDestroy`
+**Purpose**: Called just before Angular destroys the component or directive. It is typically used for cleanup.
+
+**Example**:
+
+```typescript
+import { Component, OnDestroy } from '@angular/core';
+
+@Component({
+  selector: 'app-destroy-example',
+  template: `<p>Component will be destroyed!</p>`
+})
+export class DestroyExampleComponent implements OnDestroy {
+  ngOnDestroy() {
+    console.log('ngOnDestroy - Component is about to be destroyed');
+    // Clean up code here, e.g., unsubscribing from observables
+  }
+}
+```
+
+- **Explanation**: `ngOnDestroy` is crucial for cleanup operations, such as unsubscribing from observables or detaching event listeners to prevent memory leaks.
+
+### Putting It All Together
+
+In an interview, you might be asked to demonstrate your understanding by describing a scenario where you would use several of these hooks together. For example:
+
+```typescript
+import { Component, OnInit, OnDestroy, OnChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked, Input, SimpleChanges } from '@angular/core';
+
+@Component({
+  selector: 'app-lifecycle-example',
+  template: `
+    <ng-content></ng-content>
+    <p #viewElement>Lifecycle Example Component</p>
+  `
+})
+export class LifecycleExampleComponent implements OnInit, OnDestroy, OnChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked {
+  @Input() inputData: string;
+
+  constructor() {
+    console.log('Constructor - component is constructed');
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('ngOnChanges - input data changed:', changes);
+  }
+
+  ngOnInit() {
+    console.log('ngOnInit - component initialized');
+  }
+
+  ngDoCheck() {
+    console.log('ngDoCheck - custom change detection');
+  }
+
+  ngAfterContentInit() {
+    console.log('ngAfterContentInit - content initialized');
+  }
+
+  ngAfterContentChecked() {
+    console.log('ngAfterContentChecked - content checked');
+  }
+
+  ngAfterViewInit() {
+    console.log('ngAfterViewInit - view initialized');
+  }
+
+  ngAfterViewChecked() {
+    console.log('ngAfterViewChecked - view checked');
+  }
+
+  ngOnDestroy() {
+    console.log('ngOnDestroy - component destroyed');
+  }
+}
+```
+
+This example logs the lifecycle events, demonstrating how they are triggered in sequence as the component is created, updated, and destroyed. In an interview, you might be asked to describe this sequence or explain how you would use these hooks to manage component behavior effectively.
+
+### Interview Perspective Tips
+- **Why are lifecycle hooks important?** They are essential for controlling and managing the component's behavior at various stages of its existence, allowing for optimized resource management, clean code, and predictable application behavior.
+- **Common Questions**: Be prepared to explain the sequence of these hooks, why and when you would use each one, and how they work together in a real-world scenario.
+- **Advanced Scenarios**: You might be asked to compare or contrast hooks, especially around change detection (`ngOnChanges` vs. `ngDoCheck`), and how they can be used for performance optimization.
+
+Understanding these hooks, their order of execution, and appropriate use cases will demonstrate a strong grasp of Angular’s component lifecycle, which is key in an interview setting.
 
 ## Singleton class
 
