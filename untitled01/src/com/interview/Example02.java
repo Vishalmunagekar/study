@@ -23,3 +23,23 @@ public class Example02 {
         System.out.println("String");
     }
 }
+
+
+class Bike{
+    void run() {
+        System.out.println("Running");
+    }
+}
+
+class Bmw extends Bike{
+    void run() {
+        System.out.println("Running safely with 120km/hr");
+    }
+}
+
+class Main{
+    public static void main(String args[]){
+        Bike b = new Bmw();//upcasting
+        b.run();
+    }
+}
