@@ -89,10 +89,10 @@ public class Example01 {
         Student student = list.stream().sorted(Comparator.comparing(Student::getRank)).skip(1).findFirst().get();
         //System.out.println(student);
 
-        // 16- Merge two Employee ArrayList and sort by age in using java8 stream API
+        // 16- Merge two Employee ArrayList and sort by age
         List<Student> newList = Stream.concat(list.stream(), list.stream()).sorted(Comparator.comparing(Student::getAge)).collect(Collectors.toList());
 
-        // 17- Find even numbers from ArrayList and find the sum of all numbers using Java 8 stream API
+        // 17- Find even numbers from ArrayList and find the sum of all numbers
         List<Integer> numbers = Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12);
 
         int sum = numbers.stream().filter(num -> num % 2 == 0)

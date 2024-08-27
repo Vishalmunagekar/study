@@ -15,7 +15,7 @@ import java.util.Map;
 public class Example05 {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5, 6};
-        int target = 7;
+        int target = 5;
         List<Integer[]> arrayList = new ArrayList<>();
         Map<Integer, Integer> integerListMap = new HashMap<>();
         for(int num : arr){

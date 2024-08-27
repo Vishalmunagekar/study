@@ -14,10 +14,6 @@ public class ExamProblem {
 //input2 = 2
 //input3 = {-2,1,5,3}
 
-
-
-
-
     public static void main1(String[] args) {
         System.out.println(findBestScore(5, 3, new int[]{2, 1, 5, 3, 4}));
     }

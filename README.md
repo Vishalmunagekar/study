@@ -1012,7 +1012,44 @@ public class ScheduledTasks {
     }
 }
 ```
+## `@PostConstruct` and `@PreDestroy`
+- Spring allows us to attach custom actions to bean **creation** and **destruction**
 
+### `@PostConstruct`
+- Spring calls the methods annotated with `@PostConstruct` only once, just after the initialization of bean properties. Keep in mind that these methods will run even if there’s nothing to initialize.
+- The method annotated with `@PostConstruct` can have any access level, but it **can’t be static**.
+- One possible use of `@PostConstruct` is populating a database. For instance, during development, we might want to create some default users:
+
+```java
+@Component
+public class DbInit {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @PostConstruct
+    private void postConstruct() {
+        User admin = new User("admin", "admin password");
+        User normalUser = new User("user", "user password");
+        userRepository.save(admin, normalUser);
+    }
+}
+```
+### `@PreDestroy`
+- A method annotated with `@PreDestroy` runs only once, just before Spring removes our bean from the application context.
+- Same as with `@PostConstruct`, the methods annotated with `@PreDestroy` can have any access level, but **can’t be static**.
+- The purpose of this method should be to release resources or perform other cleanup tasks, such as closing a database connection, before the bean gets destroyed.
+```java
+@Component
+public class UserRepository {
+
+    private DbConnection dbConnection;
+    @PreDestroy
+    public void preDestroy() {
+        dbConnection.close();
+    }
+}
+```
 
 ## Bean scopes in Spring framework
 In the context of Spring Framework, bean scopes define the lifecycle and visibility of the beans within the Spring IoC (Inversion of Control) container. Understanding these scopes is crucial for managing the behavior and dependencies of beans in a Spring application
@@ -1157,7 +1194,12 @@ public class SimpleBookRestController {
 1. Make your **class final**, so that no other classes can extend it.
 2. Make all your **fields final**, so that they’re initialized only once inside the constructor and never modified afterward.
 3. Don’t define/provide setter methods.
-- **Example :**
+
+### Built-in Immutable Classes:
+ - **Wrapper classes** : `Integer`, `Long`, `Float`, `Double`, `Boolean`, `Character`, `Byte`, `Short`.
+- **String class**: `String`.
+
+**Example :**
 ```java
 package com.app;
 
@@ -2155,8 +2197,15 @@ JOIN ADDRESS a ON e.emp_id = a.emp_id
 JOIN SALARY s ON e.emp_id = s.emp_id
 WHERE s.amount > 100000
 AND a.city = 'Pune';
-
 ```
+
+### find the employee whose salary is the second highest
+```sql
+select * from employee where salary=(select Max(salary) from employee);
+
+select *from employee group by salary order by  salary desc limit 1,1;
+```
+
 ---
 # Microserices
 | Aspect                | Monolithic Architecture                               | Microservices Architecture                          |
