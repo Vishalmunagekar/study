@@ -2117,6 +2117,55 @@ Together, these properties ensure that database transactions are processed relia
 
 ## MySQL Problem
 
+To find the second highest salary from an `Employee` table, you can use the `ORDER BY` clause with `LIMIT` or `OFFSET`. Here’s a straightforward SQL query to achieve this:
+
+### Query using `ORDER BY` and `LIMIT`:
+
+```sql
+SELECT DISTINCT salary
+FROM Employee
+ORDER BY salary DESC
+LIMIT 1 OFFSET 1;
+```
+### Explanation:
+
+- **`SELECT DISTINCT salary`**: Selects distinct salary values from the `Employee` table to avoid duplicates.
+- **`ORDER BY salary DESC`**: Sorts the salaries in descending order, so the highest salaries come first.
+- **`LIMIT 1 OFFSET 1`**: Skips the first (highest) salary and selects the second row, which is the second highest salary.
+
+### Alternative Query using Subquery:
+
+Another approach using a subquery to achieve the same result:
+
+```sql
+SELECT MAX(salary)
+FROM Employee
+WHERE salary < (SELECT MAX(salary) FROM Employee);
+```
+
+### Explanation:
+
+- The subquery `(SELECT MAX(salary) FROM Employee)` finds the highest salary.
+- The main query then selects the maximum salary that is less than the highest salary, effectively giving the second highest salary.
+
+Both queries will give you the second highest salary from the `Employee` table.
+
+### Next problem
+To return the employees who have the second highest salary, especially when multiple employees share the same second highest salary, you can use a subquery to find the second highest salary first, and then use that value to filter the employees.
+
+Here’s the SQL query to achieve that:
+
+```sql
+SELECT *
+FROM Employee
+WHERE salary = (
+    SELECT DISTINCT salary
+    FROM Employee
+    ORDER BY salary DESC
+    LIMIT 1 OFFSET 1
+);
+```
+
 ```sql
 -- Create EMPLOYEE table
 CREATE TABLE EMPLOYEE (
@@ -2275,3 +2324,76 @@ In a microservices architecture, services need to discover each other dynamicall
 - **Netflix Eureka** : A REST-based service registry used by Netflix OSS.
 - **Consul** : A service mesh solution providing service discovery, configuration, and segmentation.
 - **Zookeeper** : A centralized service for maintaining configuration information, naming, and providing distributed synchronization.
+
+## `hashCode` and `equals` methods
+- In Java, the `hashCode` and `equals` methods are crucial for ensuring the correct behavior of objects, especially when using collections like `HashMap`, `HashSet`, and other data structures that rely on hashing. Here's why these methods are important:
+
+### 1. **Purpose of `hashCode` Method:**
+
+- The `hashCode` method returns an integer representation of the object’s memory address (or a computed value based on the object’s fields) that is used for hashing purposes in hash-based collections.
+- It is used to quickly narrow down the potential matches in a hash table by calculating the bucket index.
+- If two objects are equal according to the `equals` method, then they must have the same `hashCode` value.
+  
+### 2. **Purpose of `equals` Method:**
+
+- The `equals` method checks whether two objects are logically equivalent, meaning it compares the content or state of the objects.
+- By default, the `equals` method compares object references (i.e., whether they point to the same memory location), but it is often overridden to compare object contents (e.g., fields).
+  
+### **Why Both Methods Are Needed Together:**
+
+- In hash-based collections (like `HashSet` or `HashMap`), the `hashCode` method is used first to find the correct bucket location, and then `equals` is used to check if the object already exists in the bucket.
+- If only `hashCode` is used, it could incorrectly identify two different objects as the same because different objects can have the same hash code (hash collision).
+- If only `equals` is used without `hashCode`, the performance of hash-based collections would degrade to O(n) since every object would have to be compared using `equals`.
+
+### **Contract Between `hashCode` and `equals`:**
+
+- **Consistent Behavior:** If the `equals` method considers two objects as equal, then `hashCode` must return the same integer result for these objects.
+- **Not Required to Be Unique:** If two objects are not equal according to the `equals` method, their `hashCode` values do not have to be different (though it’s better if they are to minimize collisions).
+  
+### **Practical Example:**
+
+Consider using a `HashSet` to store custom objects. If `hashCode` and `equals` are not properly implemented:
+
+- Two logically equal objects could be stored in the set, violating the set’s uniqueness constraint.
+- A `contains` check might fail because the `hashCode` points to a different bucket or `equals` isn't defined to check content correctly.
+
+### **Example of Overriding `hashCode` and `equals`:**
+
+Here’s a basic example of how to correctly override these methods in a Java class:
+
+```java
+import java.util.Objects;
+
+public class Person {
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return age == person.age && Objects.equals(name, person.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
+    }
+}
+```
+
+### Summary:
+
+- **`equals`**: Determines logical equality between objects.
+- **`hashCode`**: Provides an integer value for hashing that allows objects to be stored/retrieved quickly in hash-based collections.
+- Together, they ensure correct and efficient behavior in collections that rely on hashing, preventing data inconsistencies and performance issues.
+
+what is serialization in spring boot ?
+what is aop in spring ?
+what is synchronized block in java ?
