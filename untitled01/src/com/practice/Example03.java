@@ -1,8 +1,6 @@
 package com.practice;
 
 
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -22,12 +20,13 @@ public class Example03 {
 
     public static void main(String[] args) {
         String str = "mumbai";
-        Map<Character, Long> map = str.chars().mapToObj(c -> (char) c)
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-        System.out.println(map);
-        Optional<Map.Entry<Character, Long>> maxMap = map.entrySet().stream()
-                .max(Comparator.comparing(Map.Entry::getValue));
-        Optional<Long> aLong = maxMap.map(Map.Entry::getValue);
-        System.out.println(aLong);
+        Optional<Long> max = str.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue()).map(Map.Entry::getValue);
+
+        System.out.println(max);
     }
 }

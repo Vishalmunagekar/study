@@ -371,3 +371,92 @@ management.endpoint.health.show-details=always
 project, first `application.yml` will be loaded, later
 `application.properties` will be loaded.
 - Important point to be noted is that if `application.yml` and `application.properties` have same keys for example in `application.yml` has `spring.app.name = testYML` and `application.properties` has `spring.app.name = testProperties` at same time in same project, then `application.yml` value will be overwritten by `application.properties` value since it is loading at last. And the value in `spring.app.name = testProperties`.
+
+
+When using Dependency Injection (DI), there are three common types to choose from: **Constructor Injection**, **Setter Injection**, and **Field Injection**. Each type has its own use cases, advantages, and drawbacks. However, **Constructor Injection** is generally considered the best practice in most scenarios. Here's a breakdown of each type and the reasons why Constructor Injection is preferred:
+
+### Types of Dependency Injection
+
+1. **Constructor Injection**
+   - Dependencies are provided through the class constructor.
+   - Example:
+
+   ```java
+   public class Car {
+       private final Engine engine;
+
+       // Constructor Injection
+       public Car(Engine engine) {
+           this.engine = engine;
+       }
+   }
+   ```
+
+2. **Setter Injection**
+   - Dependencies are provided through setter methods after the object is constructed.
+   - Example:
+
+   ```java
+   public class Car {
+       private Engine engine;
+
+       // Setter Injection
+       public void setEngine(Engine engine) {
+           this.engine = engine;
+       }
+   }
+   ```
+
+3. **Field Injection**
+   - Dependencies are injected directly into the fields of the class, usually using annotations (like `@Autowired` in Spring).
+   - Example:
+
+   ```java
+   public class Car {
+       @Autowired
+       private Engine engine; // Field Injection
+   }
+   ```
+
+### Which Type of DI Should Be Used?
+
+**1. Constructor Injection: Best Practice**
+
+- **Advantages**:
+  - **Immutability**: Makes it easy to create immutable objects since all dependencies are provided at construction time.
+  - **Mandatory Dependencies**: Clearly indicates that the class cannot be instantiated without its required dependencies. This ensures that all required dependencies are available and avoids the risk of a partially constructed object.
+  - **Testability**: Makes the class more testable by allowing the developer to inject mock dependencies directly through the constructor.
+  - **Single Responsibility**: Keeps the code clean and adheres to the Single Responsibility Principle (SRP), as the class's dependencies are clearly defined.
+  - **Avoids NullPointerException**: Since dependencies are required at construction time, it minimizes the risk of `NullPointerException` due to uninitialized dependencies.
+
+- **Disadvantages**:
+  - **Multiple Dependencies**: When there are many dependencies, constructors can become cumbersome with a large number of parameters.
+
+**2. Setter Injection: Use for Optional Dependencies**
+
+- **Advantages**:
+  - **Optional Dependencies**: Useful when some dependencies are optional and may not always be needed.
+  - **Flexibility**: Provides flexibility by allowing dependencies to be set or changed after object creation.
+
+- **Disadvantages**:
+  - **Mutable State**: Allows dependencies to be changed after object creation, which can make objects mutable and harder to reason about.
+  - **Lack of Clarity**: Can lead to unclear object construction, as it may not be obvious what dependencies are required for the object to function properly.
+
+**3. Field Injection: Not Recommended for General Use**
+
+- **Advantages**:
+  - **Simplicity**: It's easy to use, especially with frameworks like Spring, where it reduces boilerplate code.
+  
+- **Disadvantages**:
+  - **Hidden Dependencies**: Makes it difficult to see what dependencies a class requires at a glance, reducing code readability and maintainability.
+  - **Impedes Testability**: Harder to test because you can't easily provide mock objects via fields, leading to potential dependency on the DI framework.
+  - **Violates Encapsulation**: Directly exposes dependencies as fields, potentially breaking encapsulation principles.
+  - **Less Flexible**: Dependencies cannot be set or changed after object creation without reflection or other means, making it less flexible.
+
+### Conclusion: Best Practice
+
+- **Use Constructor Injection** for all required dependencies. It ensures immutability, clear contract for dependencies, and better testability. This is why Constructor Injection is generally considered the best practice.
+- **Use Setter Injection** only for optional dependencies that are not always required for the object to function.
+- **Avoid Field Injection** unless you have a specific use case where simplicity is crucial, and you're willing to trade off some testability and flexibility.
+
+By following these guidelines, you will create more maintainable, testable, and robust code.

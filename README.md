@@ -1067,6 +1067,41 @@ public class Person {
 - **`hashCode`**: Provides an integer value for hashing that allows objects to be stored/retrieved quickly in hash-based collections.
 - Together, they ensure correct and efficient behavior in collections that rely on hashing, preventing data inconsistencies and performance issues.
 
-what is serialization in spring boot ?
-what is aop in spring ?
-what is synchronized block in java ?
+The **Java Security Manager** is a security mechanism in the Java programming language that allows developers to enforce a set of access controls on Java applications. It provides a way to define a security policy that governs which resources (such as files, network connections, or system properties) a Java application can access or modify.
+
+### Key Features of the Java Security Manager:
+
+1. **Access Control**:
+   The Security Manager controls access to system resources such as files, network sockets, and system properties. For example, it can prevent untrusted code from reading or writing to a file system or opening network connections.
+
+2. **Policy-Based Permissions**:
+   The Security Manager works in conjunction with a policy file that specifies what permissions are granted to various classes or code sources. This policy file can be customized by the developer or system administrator to enforce different levels of security depending on the needs of the application.
+
+3. **Sandboxing**:
+   The Java Security Manager is commonly used in sandbox environments, where untrusted or partially trusted code is executed. It restricts the code to only perform actions that are deemed safe and allowed by the policy.
+
+4. **Protection Against Malicious Code**:
+   It helps protect against malicious code that might attempt to perform harmful operations, such as deleting files, accessing sensitive information, or connecting to unauthorized network addresses.
+
+5. **Runtime Enforcement**:
+   The Security Manager operates at runtime, meaning it continuously monitors and enforces the security policy while the Java application is running.
+
+### Usage of the Java Security Manager:
+
+- **Enabling the Security Manager**: You can enable the Java Security Manager by specifying the `-Djava.security.manager` JVM option when starting a Java application, optionally providing a custom policy file using the `-Djava.security.policy` option.
+
+```sh
+java -Djava.security.manager -Djava.security.policy=myPolicy.policy MyApp
+```
+
+- **Custom Policies**: You can create a policy file (`.policy`) to define what permissions your Java application or code source has, such as file read/write permissions, network permissions, or access to system properties.
+
+### Deprecation Notice:
+
+As of Java 17, the Security Manager is deprecated and is planned for removal in future releases. This decision was made because the Security Manager has seen less usage in modern applications, and its capabilities have been replaced by more robust security practices and sandboxing mechanisms outside of the JVM itself【82†source】.
+
+### Conclusion:
+
+The Java Security Manager is a powerful feature for defining and enforcing security policies within Java applications. However, developers are encouraged to explore alternative security measures due to its planned deprecation.
+
+For more details, you can refer to the [official Oracle documentation on Java Security Manager](https://docs.oracle.com/javase/8/docs/technotes/guides/security/PolicyFiles.html).
