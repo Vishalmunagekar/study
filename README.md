@@ -1,7 +1,7 @@
 ## OOPS Concepts :
 Object-Oriented Programming (OOP) is a programming paradigm that uses "objects" to design software. It is built around the concept of objects, which can be instances of classes, and provides a way to structure programs so that properties and behaviors are bundled together. Here are the key principles and features of OOP:
 
-1. **Abstraction -** 
+1. **Abstraction (Interface and abstract classes) -** 
 - **Concept** : Data abstraction involves hiding the implementation details and showing only the essential features of an object. It focuses on what an object does rather than how it does it.
 - **Usage** : In my experience, I have utilized many predefined classes provided by Java (from Oracle/Sun). While I may not know the internal workings of these classes, I have effectively used their functionalities in my projects.
 - **Implementation** : Abstraction in Java can be achieved using interfaces and abstract classes. By defining methods in an interface, we can specify what actions an object can perform, without dictating how these actions are implemented.
@@ -10,25 +10,20 @@ Object-Oriented Programming (OOP) is a programming paradigm that uses "objects" 
 
     - Abstract Classes: The abstract class `Vehicle` defines abstract methods `start()` and `stop()`, along with a concrete method `fuel()`. Subclasses `Car` and `Bike` provide specific implementations for the abstract methods, while inheriting the concrete method.
 
-2. **Encapsulation -** 
+2. **Encapsulation (also Getters/Setters) -** 
 - **Concept** : Encapsulation is the process of bundling data (fields) and methods (functions) that operate on the data into a single unit, usually a class. It helps in protecting the data from unauthorized access and modification.
 - **Usage** : In my projects, all classes demonstrate encapsulation by bundling data and the methods that manipulate that data together.
 - **Example** : Consider a User class. The class has private data members, and for these data members, it provides public methods (getters and setters) to allow controlled manipulation and access.
 
-3. **Modularity -** 
-- **Concept** : Modularity involves dividing a project into separate, self-contained modules. This approach improves code readability and maintainability by organizing related functionality into distinct units.
-- **Implementation** : The concept of packages in Java helps achieve modularity. By grouping related classes and interfaces into packages, we create well-defined modules within the project.
-- **Usage** : In my projects, I have implemented modularity by creating different modules such as User, Pizza, Order, and Address. Each module encapsulates its respective functionality, making the codebase more organized and easier to manage.
-
-4. **Hierarchy**
-- **Concept** : Hierarchy in OOP is the ranking or ordering of abstractions. It allows for code reusability by defining relationships between classes and objects.
-- **Types of Hierarchies** : There are two main types of hierarchies in OOP:
+3. **Inheritance (Parent and child relationship)**
+- **Concept** : Inheritance in OOP is the ranking or ordering of abstractions. It allows for code reusability by defining relationships between classes and objects.
+- **Types of Inheritance** : There are two main types of hierarchies in OOP:
 	1. **“IS–A” hierarchy : Inheritance** : This type of hierarchy allows a subclass to inherit properties and methods from a superclass, promoting code reuse and logical structuring.
 		- `Rose` "is-a" `flower`
 		- `Employee` "is-a" `person`
 		- `Student` "is-a" `person`
 		- `Rectangle` "is-a" `Shape`
-	2. **“PART–OF” hierarchy : Association** : This type of hierarchy defines how objects are associated with each other. Aggregation represents a weak association where the lifetime of the part is independent of the whole, while composition represents a strong association where the part's lifetime is dependent on the whole.
+	2. **“PART–OF” Inheritance : Association** : This type of hierarchy defines how objects are associated with each other. Aggregation represents a weak association where the lifetime of the part is independent of the whole, while composition represents a strong association where the part's lifetime is dependent on the whole.
 		- There are two types of **Association**
 			- **Aggregation (Loose coupling)**
 				- `Wallet` has `Money` but `money` doesn’t need to have `Wallet` necessarily
@@ -43,7 +38,7 @@ Object-Oriented Programming (OOP) is a programming paradigm that uses "objects" 
 				- `bird` has `wings`
 				- `Order` has `pizza(s)`
 	
-## Polymorphism.
+4. **Polymorphism (also overloading/overriding)**
 - **Definition** : Polymorphism, refers to the ability of different objects to be treated as instances of a common superclass. This enables a single interface to represent various underlying data types and behaviors.
 
 - **Concept** : At its core, polymorphism allows for flexibility and extensibility in software design by promoting code reuse and abstraction. The concept revolves around the idea of having multiple classes that share a common interface (via inheritance) but provide different implementations of methods. This allows developers to write code that can work with objects of multiple types, without needing to know the specific details of each type.
