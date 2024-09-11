@@ -26,20 +26,34 @@ public class Example02 {
 
 
 class Bike{
+    public static int c =0;
+
+    public Bike() {
+    }
+
+    public Bike(int x){
+        c = x;
+    }
+
+    void method(){
+        c =20;
+    }
     void run() {
         System.out.println("Running");
     }
 }
 
-class Bmw extends Bike{
-    void run() {
-        System.out.println("Running safely with 120km/hr");
-    }
-}
+//class Bmw extends Bike{
+//    void run() {
+//        System.out.println("Running safely with 120km/hr");
+//    }
+//}
 
 class Main{
     public static void main(String args[]){
-        Bike b = new Bmw();//upcasting
-        b.run();
+//        Bike b = new Bmw();//upcasting
+//        b.run();
+        Bike b = new Bike();
+        System.out.println(Bike.c);
     }
 }

@@ -665,6 +665,20 @@ In Java, the `final` keyword is used to apply restrictions on classes, methods, 
 4. Final Parameter: A parameter whose value cannot be modified within the method.
 - Using the `final` keyword appropriately can help in writing more *robust*, *secure*, and *maintainable* code by explicitly preventing unintended modifications.
 
+### finalize():
+- **Purpose**: A method in the `Object` class that is called by the *garbage collector* just before an object is garbage collected.
+- **Usage** : Typically used for cleanup activities like closing files or releasing resources associated with an object.
+- **Note** : This method is not recommended for general use due to its unpredictability and potential performance impact.
+
+```java
+class MyClass {
+    @Override
+    protected void finalize() throws Throwable {
+        // Cleanup code
+        super.finalize();
+    }
+}
+```
 
 ## static
 The **static** keyword in Java is used to declare a member variable or method that belongs to the class itself, rather than to an instance of the class. This means that static members can be accessed without creating an instance of the class.

@@ -3,6 +3,7 @@ package com.interview;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Practise {
 
@@ -44,7 +45,11 @@ public class Practise {
         map.put("vishal", 600);
         map.put("shankar", 500);
 
+        Stream<Integer> sorted = map.values().stream().sorted(Comparator.reverseOrder());
+
+
         Integer secondHighest = map.values().stream().sorted(Comparator.reverseOrder()).skip(1).findFirst().get();
+
         System.out.println(secondHighest);
 
         int[] arr = new int[]{11,12,11,13,14,15,14,16};
